@@ -1,0 +1,141 @@
+# disable standard terminal function CTRL-Q and CTRL-S
+# to stop output and resume
+stty -ixon
+
+# use the vi keymap
+setopt vi
+
+if [ -e "$HOME/.zprofile" ]; then
+    source "$HOME/.zprofile"
+fi
+
+# increase function level from default 500 due to heavy use of zsh code
+# Configure powerlevel9k prompt {{{
+# POWERLEVEL9K_CUSTOM_HOST=hostname
+# POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_unique
+# POWERLEVEL9K_SHORTEN_DELIMITER='*'
+POWERLEVEL9K_STATUS_OK=false
+POWERLEVEL9K_VI_INSERT_MODE_STRING=">"
+POWERLEVEL9K_VI_COMMAND_MODE_STRING='|'
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(ssh status root_indicator vi_mode)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time)
+# }}}
+
+# Oh My ZSH settings{{{
+# case sensitive completion, etc.
+CASE_SENSITIVE=true
+# auto-command correction
+ENABLE_CORRECTION=true
+# don't show if files are dirty in a git repo
+# as it takes a long time
+DISABLE_UNTRACKED_FILES_DIRTY=true
+# }}}
+#
+
+# make sure prompt gets printed on a new line
+setopt PROMPT_SP
+setopt PROMPT_CR
+export PROMPT_EOL_MARK=%B%S%#%s%b
+
+
+# Make directory listing when chaging directory {{{
+function chpwd() {
+    if [ ! -t 1 ]; then
+        # don't generate output when changing directory in a script
+        return
+    fi
+    local listing="$(exa -l --sort=modified -r --git --color=always)"
+    local numdisplayfiles=22
+    local numfiles="$(echo "$listing" | wc -l)"
+    echo "$listing" | head -n"$numdisplayfiles"
+    [ "$numfiles" -gt "$numdisplayfiles" ] \
+        && echo -e "\e[3m  (there are $((numfiles - numdisplayfiles)) more files in this folder)\e[23m"
+}
+# }}}
+#
+f() {
+  local searchterm="''${1:-""}"
+  shift
+  local out="$(rg -n "$searchterm" "$@" | fzf | cut -d: -f1-2)"
+  local file="''${out%:*}"
+  if [ -n "$file" ]; then
+    "$EDITOR" "$file" +"$(printf "%s\n" "$out" | cut -d: -f2)"
+  fi
+  return $?
+}
+zle -N fzf-search-files
+bindkey '^F' fzf-search-files
+
+# shift-tab : go backward in menu (invert of tab)
+bindkey '^[[Z' reverse-menu-complete
+
+# make sure the FZF keybindings work
+# bindkey '^I' fzf-completion #, disabled as it breaks on NixOS
+bindkey '\ef' fzf-file-widget
+bindkey '\ec' fzf-cd-widget
+bindkey '^R' fzf-history-widget
+
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '^Xe' edit-command-line
+bindkey '^X^E' edit-command-line
+
+# make most keybindings also work in vim normal mode
+bindkey -v '^A' beginning-of-line
+bindkey -v '^B' backward-char
+bindkey -v '^E' end-of-line
+bindkey -v '^W' backward-delete-word
+bindkey -v '^K' kill-line
+bindkey -v '^T' transpose-chars
+bindkey -v '^[f' forward-word
+bindkey -v '^[b' backward-word
+bindkey -v '^P' up-line-or-history
+bindkey -v '^N' down-line-or-history
+bindkey -v '^O' vi-cmd-mode
+bindkey -v '^[' vi-cmd-mode
+bindkey '^[[1;5C' forward-word # arrow-key right
+bindkey '^[[1;5D' backward-word # arrow-key left
+bindkey '  ' autosuggest-accept
+bindkey '^S' autosuggest-execute
+
+# in some terminals the delete character doesn't
+# work properly, so make sure it's bound
+bindkey    "^[[3~"          delete-char
+bindkey    "^[3;5~"         delete-char
+
+# These global aliases will be replaced
+# by the respective command. These are evaluated
+# before any other expansion takes place.
+alias -g P=" pbpaste | "
+alias -g Y=" | pbcopy"
+alias -g L=" | less"
+alias -g V=" | vimpager"
+alias -g S=" | rg -n "
+alias -g C=" | rg -c "
+alias -g F=" | tail -f "
+alias -g T=" | tail"
+alias -g H=" | head"
+alias -g W=" | entr "
+alias -g NE=" 2>/dev/null"
+alias -g X=" | xargs"
+alias -g X1=" | xargs -N 1"
+alias -g XRG=" | xargs rg "
+alias -g LL=" | while IFS= read line; do "
+
+
+## TMUX INTEGRATION
+
+# have a bell on prompt, tmux monitors this, this way i know when commands in other windows are finished.
+bell_on_prompt() {
+    tput bel
+}
+add-zsh-hook precmd bell_on_prompt
+# start tmux automatically
+if command tmux -V 2>&1 >/dev/null; then
+  # This Environment variable is checked in order
+  # to avoid nesting. Because when tmux starts a new
+  # shell in it, it will try to launch tmux again!
+  if [ -z "$TMUX" ]; then
+    tmux
+  fi
+fi

@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+is_ultra_wide=$(yabai -m query --displays --display 1 | jq -e '.frame | (.w)/(.h) | round == 4')
+current_space_id=$(yabai -m query --spaces --space | jq '.index')
+num_windows=$(yabai -m query --windows --space $current_space_id | jq -ec ' map(select(."is-visible" == true and ."is-floating" == false)) | length')
+
+if [ "$is_ultra_wide" = true ] ; then
+    case $num_windows in
+        1)
+            echo "setting to ultrawide single window padding"
+            yabai -m space $current_space_id --padding abs:55:5:800:800
+            ;;
+        2)
+            echo "setting to ultrawide 2 window padding"
+            yabai -m space $current_space_id --padding abs:55:5:400:400
+            ;;
+        3)
+            echo "setting to ultrawide 3 window padding"
+            yabai -m space $current_space_id --padding abs:55:5:200:200
+            ;;
+        *)
+            echo "setting to ultrawide 4+ window padding"
+            yabai -m space $current_space_id --padding abs:55:5:50:50
+            ;;
+    esac
+else
+    echo "setting to laptop padding"
+    yabai -m space $current_space_id --padding abs:55:5:12:12
+fi

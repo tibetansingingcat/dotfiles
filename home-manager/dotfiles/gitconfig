@@ -1,0 +1,76 @@
+[user]
+	name = William Rose
+	email = will@williamro.se
+[includeIf "gitdir:~/sxm/**"]
+    path = ~/sxm/.gitconfig
+[core]
+	editor = vim
+	excludesfile = /Users/wrose/.gitignore_global
+	pager = delta
+[branch]
+	autosetupmerge = true
+[merge]
+  #conflictstyle = diff3
+	tool = fugitive
+[diff]
+	renames = copy
+	renamelimit = 0
+	tool = delta
+	algorithm = patience
+	prompt = false
+[difftool]
+  prompt = false
+[push]
+	default = current
+[color]
+	ui = auto
+	branch = auto
+	status = auto
+	diff = auto
+	interactive = auto
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true
+  light = false
+  side-by-side = true
+  line-numbers = true
+[alias]
+	a = add
+	aa = add .
+	at = add -u .
+	c = commit
+	cm = commit -m
+	d = diff --color-words
+	ds = diff --color-words --staged
+	mm = merge
+	mf = merge --ff-only
+	mt = mergetool
+  p = push
+	pu = pull
+	rb = rebase
+	rbi = rebase -i
+	rbc = rebase --continue
+	rba = rebase --abort
+	s = status
+	st = stash
+	stl = stash list
+	stp = stash pop
+	lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+	lg = !"git lg1"
+	ctags = !.git/hooks/ctags
+[init]
+	templatedir = ~/.git_template
+[mergetool "fugitive"]
+	cmd = nvim -f -c \"Gvdiffsplit!\" \"$MERGED\"
+[mergetool "delta"]
+  cmd = delta "$LOCAL" "$REMOTE"
+[rerere]
+	enabled = true
+[filter "hawser"]
+	clean = git hawser clean %f
+	smudge = git hawser smudge %f
+	required = true
+[pull]
+	rebase = true
