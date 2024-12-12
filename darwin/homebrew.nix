@@ -10,6 +10,7 @@
     caskArgs.no_quarantine = true;
     global.brewfile = true;
     casks = [ 
+      "aldente"
       "anki"
       "balenaetcher"
       "beeper"
@@ -27,6 +28,7 @@
       "steam"
 		  "telegram"
       "unity-hub"
+      "vlc"
       "whisky"
       "zoom"
     ];

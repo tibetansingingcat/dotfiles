@@ -8,8 +8,8 @@
     # };
     #shellAliases = import ../bash/aliases.nix;
     shellAliases = {
-      l = "ls -GFlah";
-      nixswitch = "darwin-rebuild switch --flake ~/.dotfiles";
+      l = "ls -Glah";
+      nixswitch = "darwin-rebuild switch --flake ~/.dotfiles#$(hostname -s)";
       #nixup = "pushd ~/src/system-config; nix flake update; nixswitch; popd";
     };
     history = {
