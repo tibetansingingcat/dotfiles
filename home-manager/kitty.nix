@@ -42,7 +42,7 @@
       inactive_border_color #1F1F2A
 
       confirm_os_window_close -1
-      shell_integration no-cursor
+      shell_integration no-sudo
       cursor_shape beam
 
       tab_bar_style separator

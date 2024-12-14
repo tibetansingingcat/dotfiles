@@ -9,10 +9,10 @@
       ''
         ## Navigation (lalt - ...)
         # Space Navigation (four spaces per display): lalt - {1, 2, 3, 4}
-        lalt - 1 : export DISPLAY=$(${yabai} -m query --displays --display | ${jq} '.index'); ${yabai} -m space --focus (math 1+4\*\( $DISPLAY - 1 \))
-        lalt - 2 : export DISPLAY=$(${yabai} -m query --displays --display | ${jq} '.index'); ${yabai} -m space --focus (math 2+4\*\( $DISPLAY - 1 \))
-        lalt - 3 : export DISPLAY=$(${yabai} -m query --displays --display | ${jq} '.index'); ${yabai} -m space --focus (math 3+4\*\( $DISPLAY - 1 \))
-        lalt - 4 : export DISPLAY=$(${yabai} -m query --displays --display | ${jq} '.index'); ${yabai} -m space --focus (math 4+4\*\( $DISPLAY - 1 \))
+        lalt - 1 : export DISPLAY=$(${yabai} -m query --displays --display | ${jq} '.index'); ${yabai} -m space --focus $(math 1+4\*\( $DISPLAY - 1 \))
+        lalt - 2 : export DISPLAY=$(${yabai} -m query --displays --display | ${jq} '.index'); ${yabai} -m space --focus $(math 2+4\*\( $DISPLAY - 1 \))
+        lalt - 3 : export DISPLAY=$(${yabai} -m query --displays --display | ${jq} '.index'); ${yabai} -m space --focus $(math 3+4\*\( $DISPLAY - 1 \))
+        lalt - 4 : export DISPLAY=$(${yabai} -m query --displays --display | ${jq} '.index'); ${yabai} -m space --focus $(math 4+4\*\( $DISPLAY - 1 \))
         
         # Window Navigation (through display borders): lalt - {h, j, k, l}
         lalt - h    : ${yabai} -m window --focus west  ; or ${yabai} -m display --focus west
@@ -53,20 +53,20 @@
         ctrl + lalt - 2 : ${yabai} -m window --space 2; #sketchybar --triger windows_on_spaces
         ctrl + lalt - 3 : ${yabai} -m window --space 3; #sketchybar --triger windows_on_spaces
         ctrl + lalt - 4 : ${yabai} -m window --space 4; #sketchybar --triger windows_on_spaces
-        #shift + lalt - 1 : set DISPLAY (${yabai} -m query --displays --display | ${jq} '.index');\
-        #                  ${yabai} -m window --space (math 1+4\*\($DISPLAY - 1\));\
+        #shift + lalt - 1 : set DISPLAY $(${yabai} -m query --displays --display | ${jq} '.index');\
+        #                  ${yabai} -m window --space $(math 1+4\*\($DISPLAY - 1\));\
         #                  #sketchybar --trigger windows_on_spaces
         
-        #shift + lalt - 2 : set DISPLAY (${yabai} -m query --displays --display | ${jq} '.index');\
-        #                  ${yabai} -m window --space (math 2+4\*\($DISPLAY - 1\));\
+        #shift + lalt - 2 : set DISPLAY $(${yabai} -m query --displays --display | ${jq} '.index');\
+        #                  ${yabai} -m window --space $(math 2+4\*\($DISPLAY - 1\));\
         #                  #sketchybar --trigger windows_on_spaces
         #
         #shift + lalt - 3 : set DISPLAY (${yabai} -m query --displays --display | ${jq} '.index');\
-        #                  ${yabai} -m window --space (math 3+4\*\($DISPLAY - 1\));\
+        #                  ${yabai} -m window --space $(math 3+4\*\($DISPLAY - 1\));\
         #                  #sketchybar --trigger windows_on_spaces
         #
         #shift + lalt - 4 : set DISPLAY (${yabai} -m query --displays --display | ${jq} '.index');\
-        #                  ${yabai} -m window --space (math 4+4\*\($DISPLAY - 1\));\
+        #                  ${yabai} -m window --space $(math 4+4\*\($DISPLAY - 1\));\
         #                  #sketchybar --trigger windows_on_spaces
         
         shift + lalt - p : ${yabai} -m window --space prev; ${yabai} -m space --focus prev; #sketchybar --trigger windows_on_spaces
@@ -74,14 +74,15 @@
         
         # Mirror Space on X and Y Axis: shift + lalt - {x, y}
         shift + lalt - x : ${yabai} -m space --mirror x-axis
-        shift + lalt - y : ${yabai} -m space --mirror y-axis
+        shift + lalt - y : yabai -m space --mirror y-axis
         
         ## Stacks (shift + ctrl - ...)
         # Add the active window to the window or stack to the {direction}: shift + ctrl - {j, k, l, ö}
-        shift + ctrl - h    : ${yabai} -m window  west --stack (${yabai} -m query --windows --window | ${jq} -r '.id'); #sketchybar --trigger window_focus
-        shift + ctrl - j    : ${yabai} -m window south --stack (${yabai} -m query --windows --window | ${jq} -r '.id'); #sketchybar --trigger window_focus
-        shift + ctrl - k    : ${yabai} -m window north --stack (${yabai} -m query --windows --window | ${jq} -r '.id'); #sketchybar --trigger window_focus
-        shift + ctrl - l    : ${yabai} -m window  east --stack (${yabai} -m query --windows --window | ${jq} -r '.id'); #sketchybar --trigger window_focus
+        shift + ctrl - h    : yabai -m window  west --stack $(yabai -m query --windows --window | jq -r '.id'); #sketchybar --trigger window_focus
+        #shift + ctrl - h    : ${yabai} -m window  west --stack $(${yabai} -m query --windows --window | ${jq} -r '.id'); #sketchybar --trigger window_focus
+        shift + ctrl - j    : ${yabai} -m window south --stack $(${yabai} -m query --windows --window | ${jq} -r '.id'); #sketchybar --trigger window_focus
+        shift + ctrl - k    : ${yabai} -m window north --stack $(${yabai} -m query --windows --window | ${jq} -r '.id'); #sketchybar --trigger window_focus
+        shift + ctrl - l    : ${yabai} -m window  east --stack $(${yabai} -m query --windows --window | ${jq} -r '.id'); #sketchybar --trigger window_focus
         
         # Stack Navigation: shift + ctrl - {n, p}
         shift + ctrl - n : ${yabai} -m window --focus stack.next
@@ -131,9 +132,9 @@
         
         ## Misc
         # Open new Alacritty window
-        lalt - t : alacritty msg create-window
+        #lalt - t : alacritty msg create-window
         
-        # New window in hor./ vert. splits for all applications with ${yabai}
+        # New window in hor./ vert. splits for all applications with yabai
         #lalt - s : ${yabai} -m window --insert east;  skhd -k "cmd - n"
         #lalt - v : ${yabai} -m window --insert south; skhd -k "cmd - n"
         

@@ -21,6 +21,7 @@
 		  "handbrake"
       "insomnia"
 		  "jetbrains-toolbox"
+      "karabiner-elements"
 		  "obs"
       "plex"
 		  "raycast"

@@ -45,8 +45,8 @@ in {
       yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
       sudo yabai --load-sa
       yabai -m config debug_output on
-      yabai -m rule --add app="^(Steam Helper|steamwebhelper|wine64-preloader|Raycast|Neat|Terminal|Calculator|Calendar|Keka|Software Update|Dictionary|Karabiner-Elements|Karabiner-EventViewer)$" layer=above manage=off
-      yabai -m rule --add app="^(VLC|System Preferences|zoom.us|Photo Booth|Archive Utility|The Archive Browser|Activity Monitor|Bitwarden)$" layer=above manage=off
+      yabai -m rule --add app="^(Steam Helper|steamwebhelper|wine64-preloader|Raycast|Neat|Terminal|Calculator|Calendar|Keka|Software Update|Dictionary|Karabiner-Elements|Karabiner-EventViewer)$" manage=off
+      yabai -m rule --add app="^(VLC|System Settings|zoom.us|Photo Booth|Archive Utility|The Archive Browser|Activity Monitor|Bitwarden)$" manage=off
       yabai -m rule --add app="^Kitty$" space=2
       yabai -m rule --add app="^Anki$" space=2
       yabai -m rule --add app="^Telegram$" space=3
