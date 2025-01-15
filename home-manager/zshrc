@@ -129,7 +129,7 @@ alias -g LL=" | while IFS= read line; do "
 bell_on_prompt() {
     tput bel
 }
-add-zsh-hook precmd bell_on_prompt
+#add-zsh-hook precmd bell_on_prompt
 # start tmux automatically
 if command tmux -V 2>&1 >/dev/null; then
   # This Environment variable is checked in order

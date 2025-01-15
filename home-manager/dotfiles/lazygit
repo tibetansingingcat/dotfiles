@@ -1,0 +1,2 @@
+services:
+  'ghe.siriusxm.com': 'github:ghe.siriusxm.com'

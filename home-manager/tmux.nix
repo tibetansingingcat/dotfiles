@@ -19,7 +19,9 @@ in
       bind-key e send-prefix
     
       set -g default-terminal "xterm-256color"
-      set -g default-command "${zsh}"
+      # Make pam_tid.so work in tmux
+      __helper="${pkgs.pam-reattach}/bin/reattach-to-session-namespace";
+      set-option -g default-command "$__helper zsh"
       set -as terminal-overrides ',xterm*:Tc:sitm=\E[3m'
       set -sg terminal-overrides ",*:RGB"
     
@@ -52,7 +54,7 @@ in
     
       setw -g mode-keys vi
       bind-key -T copy-mode-vi 'v' send -X begin-selection
-      bind-key -T copy-mode-vi 'y' send -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
+      # bind-key -T copy-mode-vi 'y' send -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
     
       set -g @catppuccin_flavour 'macchiato' # or frappe, macchiato, mocha
     

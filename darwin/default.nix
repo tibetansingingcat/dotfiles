@@ -14,6 +14,9 @@
   # nix.package = pkgs.nixUnstable;
   environment.systemPackages = with pkgs; [
     delta
+    mono
+    pam-reattach
+    zstd
   ];
   nix.extraOptions = ''
     auto-optimise-store = true
@@ -32,7 +35,8 @@
 
   # Add ability to used TouchID for sudo authentication
   security.pam = {
-    enableSudoTouchIdAuth = true;
+    #enableSudoTouchIdAuth = true;
+    enableCustomSudoTouchIdAuth = true;
     # Eventually the below line should work
     #enablePamReattach = true;
   };
@@ -64,6 +68,7 @@
     NSGlobalDomain.InitialKeyRepeat = 14;
     NSGlobalDomain.KeyRepeat = 1;
     universalaccess.reduceMotion = true;
+    WindowManager.StandardHideDesktopIcons = true;
   };
   # backwards compat; don't change
   system.stateVersion = 5;

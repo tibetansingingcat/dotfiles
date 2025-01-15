@@ -25,7 +25,7 @@ with lib;
         then ''
           # Enable sudo Touch ID authentication
           /usr/bin/sed -i "" '2i\
-          auth       optional     ${pkgs.stable.pam-reattach}/lib/pam/pam_reattach.so # nix-darwin: ${option}\
+          auth       optional     ${pkgs.pam-reattach}/lib/pam/pam_reattach.so # nix-darwin: ${option}\
           auth       sufficient     pam_tid.so # nix-darwin: ${option}
           ' ${file}
 

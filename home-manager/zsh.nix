@@ -10,7 +10,7 @@
     shellAliases = {
       l = "ls -Glah";
       nixswitch = "darwin-rebuild switch --flake ~/.dotfiles#$(hostname -s)";
-      #nixup = "pushd ~/src/system-config; nix flake update; nixswitch; popd";
+      nixup = "pushd ~/.dotfiles; nix flake update; nixswitch; popd";
     };
     history = {
       ignoreDups = true;
@@ -18,7 +18,7 @@
       save = 100000;
     };
 
-    oh-my-zsh= {
+    oh-my-zsh = {
       enable = true;
       plugins = [ "dircycle" "zsh-navigation-tools" "ssh-agent" "z" ];
       /* ugly hack: oh my zsh only wants a relative path, so lets go back to the system root */
@@ -43,7 +43,8 @@
     '';
 
     profileExtra = ''
-      export PATH=$HOME/scripts:$HOME/bin:/opt/local/bin:/usr/local/bin:$PATH
+      export PATH="$HOME/scripts:$HOME/bin:/opt/local/bin:/usr/local/bin:/Users/wrose/Library/Application Support/Coursier/bin:/bin:/usr/bin:/run/current-system/sw/bin"
+
 
       # set TERMINFO to the terminfos delivered by the ncurses nix package
       if [ ! -f /etc/NIXOS ]; then
@@ -56,6 +57,8 @@
       
       # Added by Toolbox App
       export PATH="$PATH:/Users/${vars.user}/Library/Application Support/JetBrains/Toolbox/scripts"
+
+      export PATH="$PATH:/etc/profiles/per-user/${vars.user}/bin:/Users/${vars.user}/.node_modules/bin"
       source $HOME/.sde/profile/profile.sh
       
       
