@@ -1,7 +1,7 @@
-{ pkgs, ... }: 
+{ pkgs, ... }:
 let
   zsh = "${pkgs.zsh}/bin/zsh";
-in 
+in
 {
   programs.tmux = {
     enable = true;
@@ -30,6 +30,7 @@ in
       bind-key - split-window
     
       set -g renumber-windows on
+      set-option -g mouse on
     
       set -g base-index 1
       setw -g pane-base-index 1

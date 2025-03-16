@@ -9,7 +9,7 @@
     enable = true;
     caskArgs.no_quarantine = true;
     global.brewfile = true;
-    casks = [ 
+    casks = [
       "aldente"
       "anki"
       "balenaetcher"
@@ -19,33 +19,34 @@
       "discord"
       "docker"
       "firefox"
-		  "google-drive"
-		  "handbrake"
+      "google-drive"
+      "handbrake"
       "insomnia"
-		  "jetbrains-toolbox"
+      "jetbrains-toolbox"
       "karabiner-elements"
+      "neovide"
       "notion"
-		  "obs"
+      "obs"
       "plex"
-		  "raycast"
-		  "slack"
+      "raycast"
+      "slack"
       "steam"
-		  "telegram"
+      "telegram"
       "unity-hub"
       "vlc"
       "whisky"
       "zoom"
     ];
-    taps = [ 
+    taps = [
     ];
-    brews = [ 
+    brews = [
       "okta-aws-cli"
     ];
     masApps = {
-		"Bitwarden" = 1352778147;
-	  };
-	  onActivation.cleanup = "zap";
-	  onActivation.autoUpdate = true;
-	  onActivation.upgrade = true;
+      "Bitwarden" = 1352778147;
+    };
+    onActivation.cleanup = "zap";
+    onActivation.autoUpdate = true;
+    onActivation.upgrade = true;
   };
 }
