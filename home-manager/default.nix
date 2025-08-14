@@ -5,7 +5,6 @@ in
 {
   imports = [
     ./kitty.nix
-    ./neovim.nix
     ./tmux.nix
     ./zsh.nix
     nix-colors.homeManagerModule
@@ -60,16 +59,17 @@ in
   };
 
 
-  # programs.neovim = {
-  #   enable = true;
-  #   #package = pkgs.neovim-nightly;
-  #   vimAlias = true;
-  #   vimdiffAlias = true;
-  #   withNodeJs = true;
-  #   plugins = with pkgs.vimPlugins; [
-  #     nvim-treesitter.withAllGrammars
-  #   ];
-  # };
+  programs.neovim = {
+    enable = true;
+    #package = pkgs.neovim-nightly;
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
+    withNodeJs = true;
+    plugins = with pkgs.vimPlugins; [
+      nvim-treesitter.withAllGrammars
+    ];
+  };
 
   programs.ssh = {
     enable = true;
@@ -145,7 +145,10 @@ in
       executable = true;
     };
     "nvim" = {
-      source = ./dotfiles/nvim;
+      #source = ./dotfiles/nvim;
+      #source = config.lib.file.mkOutOfStoreSymlink ../nvim;
+      recursive = true;
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/nvim";
     };
     "skhd/bin/yabai-border" = {
       source = ./dotfiles/skhd/yabai-border;
@@ -161,7 +164,6 @@ in
     settings.font.size = 16;
   };
   home.file.".inputrc".source = ./dotfiles/inputrc;
-  #home.file.".config/nvim".source = ./dotfiles/nvim;
   home.file.".gitconfig".source = ./dotfiles/gitconfig;
   home.file."sxm/.gitconfig".source = ./dotfiles/sxm-gitconfig;
   home.file."Library/Application Support/lazygit/config.yml".source = ./dotfiles/lazygit;

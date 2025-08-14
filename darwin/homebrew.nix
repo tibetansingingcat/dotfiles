@@ -70,6 +70,7 @@
       "netatalk"
       "okta-aws-cli"
       "openssl"
+      "poetry"
       "pkl"
       "sad"
       "typescript-language-server"
