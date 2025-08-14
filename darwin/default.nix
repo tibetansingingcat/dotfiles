@@ -18,12 +18,13 @@
     pam-reattach
     zstd
   ];
-  nix.extraOptions = ''
-    auto-optimise-store = true
-    experimental-features = nix-command flakes
-  '' + lib.optionalString (pkgs.system == "aarch64-darwin") ''
-    extra-platforms = x86_64-darwin aarch64-darwin
-  '';
+  nix.enable = false;
+  #nix.extraOptions = ''
+  #  auto-optimise-store = true
+  #  experimental-features = nix-command flakes
+  #'' + lib.optionalString (pkgs.system == "aarch64-darwin") ''
+  #  extra-platforms = x86_64-darwin aarch64-darwin
+  #'';
   # Keyboard
   system.keyboard.enableKeyMapping = true;
   system.nvram.variables = {
@@ -42,13 +43,13 @@
   };
   # Fonts
   fonts.packages = with pkgs; [
-     recursive
-     nerdfonts
-   ];
-  services.nix-daemon.enable = true;
+    recursive
+    nerdfonts
+  ];
+  #services.nix-daemon.enable = true;
   #services.karabiner-elements.enable = true;
   nixpkgs.overlays = [
-  (self: super: {
+    (self: super: {
       karabiner-elements = super.karabiner-elements.overrideAttrs (old: {
         version = "14.13.0";
 
@@ -59,7 +60,7 @@
       });
     })
   ];
-  nix.configureBuildUsers = true;
+  #nix.configureBuildUsers = true;
   system.defaults = {
     finder.AppleShowAllExtensions = true;
     finder._FXShowPosixPathInTitle = true;

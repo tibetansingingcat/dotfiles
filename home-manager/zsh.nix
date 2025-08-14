@@ -11,6 +11,7 @@
       l = "ls -Glah";
       nixswitch = "darwin-rebuild switch --flake ~/.dotfiles#$(hostname -s)";
       nixup = "pushd ~/.dotfiles; nix flake update; nixswitch; popd";
+      sbtc = "sbt --client";
     };
     history = {
       ignoreDups = true;
@@ -43,7 +44,7 @@
     '';
 
     profileExtra = ''
-      export PATH="$HOME/scripts:$HOME/bin:/opt/local/bin:/usr/local/bin:/Users/wrose/Library/Application Support/Coursier/bin:/bin:/usr/bin:/run/current-system/sw/bin"
+      export PATH="$HOME/scripts:$HOME/bin:/opt/local/bin:/usr/local/bin:/Users/wrose/Library/Application Support/Coursier/bin:/bin:/usr/bin:/run/current-system/sw/bin:$HOME/.sxm/bin"
 
 
       # set TERMINFO to the terminfos delivered by the ncurses nix package
@@ -58,11 +59,13 @@
       # Added by Toolbox App
       export PATH="$PATH:/Users/${vars.user}/Library/Application Support/JetBrains/Toolbox/scripts"
 
-      export PATH="$PATH:/etc/profiles/per-user/${vars.user}/bin:/Users/${vars.user}/.node_modules/bin"
+      export PATH="$PATH:/etc/profiles/per-user/${vars.user}/bin:/Users/${vars.user}/.node_modules/bin:/sbin:$HOME/.rd/bin:/nix/var/nix/profiles/default/bin"
+      export PATH="/opt/homebrew/opt/bison/bin:$PATH"
       source $HOME/.sde/profile/profile.sh
       
       
       eval "$(/opt/homebrew/bin/brew shellenv)"
+      [ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
 
     '';
   };

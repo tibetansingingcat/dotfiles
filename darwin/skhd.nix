@@ -1,11 +1,11 @@
 { pkgs, ... }: {
   services.skhd = {
     enable = true;
-    skhdConfig = 
+    skhdConfig =
       let
         yabai = "${pkgs.yabai}/bin/yabai";
         jq = "${pkgs.jq}/bin/jq";
-      in 
+      in
       ''
         ## Navigation (lalt - ...)
         # Space Navigation (four spaces per display): lalt - {1, 2, 3, 4}
@@ -38,7 +38,7 @@
         shift + lalt - h : ${yabai} -m window --warp west; or ${yabai} -m window --warp last; or ${yabai} -m window --move rel:-10:0
         shift + lalt - j : ${yabai} -m window --warp south; or ${yabai} -m window --move rel:0:10
         shift + lalt - k : ${yabai} -m window --warp north; or ${yabai} -m window --move rel:0:-10
-        shift + lalt - l : ${yabai} -m window --warp east; or ${yabai} -m window --warp first; or ${yabai} -m window --move rel:10:0
+        #shift + lalt - l : ${yabai} -m window --warp east; or ${yabai} -m window --warp first; or ${yabai} -m window --move rel:10:0
         
         # Toggle split orientation of the selected windows node: shift + lalt - s
         shift + lalt - t : ${yabai} -m window --toggle split

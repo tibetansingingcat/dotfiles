@@ -12,17 +12,15 @@ in
     packages = with pkgs; [
       scala
       scala-cli
-      sbt
       coursier
       scalafmt
     ];
 
-    languages.java.enable = true;
+    #languages.java.enable = true;
 
     enterShell = ''
       scala --version
       scala-cli --version
-      sbt --version
       scalafmt --version
       echo cs version
       cs version

@@ -7,11 +7,12 @@
     nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
 
     # Environment/system management
-    darwin.url = "github:lnl7/nix-darwin/master";
+    darwin.url = "github:lnl7/nix-darwin/nix-darwin-24.11";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager/release-24.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nix-colors.url = "github:misterio77/nix-colors";
+    impurity.url = "github:outfoxxed/impurity.nix";
 
     # Simply required for sane management of Firefox on darwin
     firefox-darwin = {
@@ -22,7 +23,7 @@
     nur.url = "github:nix-community/NUR";
   };
 
-  outputs = { self, darwin, nixpkgs, home-manager, firefox-darwin, nur, nix-colors, ... }@inputs:
+  outputs = { self, darwin, nixpkgs, home-manager, firefox-darwin, nur, nix-colors, impurity, ... }@inputs:
     let
 
       vars = {
@@ -61,6 +62,14 @@
           system = "aarch64-darwin";
           specialArgs = { inherit vars; };
           modules = attrValues self.darwinModules ++ [
+            {
+              nixpkgs.overlays = [
+                (self: super: {
+                  #nixfmt-latest = nixfmt.packages."x86_64-darwin".nixfmt;
+                  nodejs = super.nodejs_22;
+                })
+              ];
+            }
             # Main `nix-darwin` config
             ./darwin
             # `home-manager` module
@@ -69,7 +78,7 @@
               nixpkgs = nixpkgsConfig;
               # `home-manager` config
               home-manager = {
-                extraSpecialArgs = { inherit nix-colors vars; };
+                extraSpecialArgs = { inherit nix-colors impurity vars; };
                 useGlobalPkgs = true;
                 useUserPackages = true;
                 backupFileExtension = "backup";
@@ -90,7 +99,7 @@
               nixpkgs = nixpkgsConfig;
               # `home-manager` config
               home-manager = {
-                extraSpecialArgs = { inherit nix-colors vars; };
+                extraSpecialArgs = { inherit nix-colors impurity vars; };
                 useGlobalPkgs = true;
                 useUserPackages = true;
                 backupFileExtension = "backup";
@@ -111,7 +120,7 @@
 
         firefox-darwin = firefox-darwin.overlay;
 
-        nur = nur.overlay;
+        nur = nur.overlays.default;
 
         # Overlay useful on Macs with Apple Silicon
         apple-silicon = final: prev: optionalAttrs (prev.stdenv.system == "aarch64-darwin") {

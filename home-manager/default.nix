@@ -5,6 +5,7 @@ in
 {
   imports = [
     ./kitty.nix
+    ./neovim.nix
     ./tmux.nix
     ./zsh.nix
     nix-colors.homeManagerModule
@@ -25,20 +26,21 @@ in
     yt-dlp
 
     # Dev stuff
-    scala
-    sbt
+    # scala
+    # sbt
     coursier
     idris2
     jq
     lua
     nodePackages.typescript
-    nodejs
+    nodejs_22
     purescript
     lazygit
     awscli2
     gh
     reattach-to-user-namespace
     rustup
+    actionlint
 
     # Useful nix related tools
     cachix # adding/managing alternative binary caches hosted by Cachix
@@ -58,16 +60,16 @@ in
   };
 
 
-  programs.neovim = {
-    enable = true;
-    #package = pkgs.neovim-nightly;
-    vimAlias = true;
-    vimdiffAlias = true;
-    withNodeJs = true;
-    plugins = with pkgs.vimPlugins; [
-      nvim-treesitter.withAllGrammars
-    ];
-  };
+  # programs.neovim = {
+  #   enable = true;
+  #   #package = pkgs.neovim-nightly;
+  #   vimAlias = true;
+  #   vimdiffAlias = true;
+  #   withNodeJs = true;
+  #   plugins = with pkgs.vimPlugins; [
+  #     nvim-treesitter.withAllGrammars
+  #   ];
+  # };
 
   programs.ssh = {
     enable = true;
