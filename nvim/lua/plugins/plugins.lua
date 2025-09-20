@@ -141,7 +141,6 @@ return {
           filetypes = { "c", "cpp" },
           single_file_support = true,
         },
-        ts_ls = {},
       },
     },
     keys = {
