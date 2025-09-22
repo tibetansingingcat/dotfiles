@@ -105,54 +105,15 @@ in
   programs.eza.enable = true;
   programs.git.enable = true;
 
-  home.activation = {
-    # yabai-reloader = ''
-    #   run ${yabai} --restart-service
-    #   run sudo ${yabai} --load-sa
-    # '';
-  };
-
   xdg.configFile = {
     "kitty/launch.conf".text = ''
       launch sh -c "tmux new -t main" -2
     '';
-    "yabai/bin/close-window" = {
-      source = ./dotfiles/yabai/close-window;
-      executable = true;
-    };
-    "yabai/bin/cycle-floating" = {
-      source = ./dotfiles/yabai/cycle-floating;
-      executable = true;
-    };
-    "yabai/bin/focus-direction" = {
-      source = ./dotfiles/yabai/focus-direction;
-      executable = true;
-    };
-    "yabai/bin/set-border" = {
-      source = ./dotfiles/yabai/set-border;
-      executable = true;
-    };
-    "yabai/bin/on-display-changed" = {
-      source = ./dotfiles/yabai/on-display-changed;
-      executable = true;
-    };
-    "yabai/bin/set-display-padding" = {
-      source = ./dotfiles/yabai/set-display-padding;
-      executable = true;
-    };
-    "yabai/bin/swap-rotate" = {
-      source = ./dotfiles/yabai/swap-rotate;
-      executable = true;
-    };
     "nvim" = {
       #source = ./dotfiles/nvim;
       #source = config.lib.file.mkOutOfStoreSymlink ../nvim;
       recursive = true;
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/nvim";
-    };
-    "skhd/bin/yabai-border" = {
-      source = ./dotfiles/skhd/yabai-border;
-      executable = true;
     };
     "karabiner/karabiner.json".source = ./dotfiles/karabiner.json;
   };

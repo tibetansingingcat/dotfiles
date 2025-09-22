@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-yabai -m window --focus $(yabai -m query --windows --space | jq -re "[sort_by(.id) | .[] | select(.floating == 1 and .visible == 1) | .id] | nth(1 + index($(yabai -m query --windows --window | jq '.id'))) // first")

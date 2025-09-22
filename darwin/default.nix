@@ -3,8 +3,6 @@
     ./homebrew.nix
     ./jankyborders.nix
     ./pam.nix
-    ./skhd.nix
-    ./yabai.nix
   ];
   programs.zsh = {
     enable = true;
