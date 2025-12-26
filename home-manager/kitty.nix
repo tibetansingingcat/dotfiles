@@ -11,6 +11,7 @@
       window_padding_width = 15;
       enable_audio_bell = false;
       copy_on_select = "yes";
+      startup_session = "~/.config/kitty/launch.conf";
     };
     extraConfig = ''
       active_tab_font_style   normal

@@ -1,0 +1,83 @@
+{
+  "React Arrow Function Component (named)": {
+    "prefix": "rafc",
+    "body": [
+      "const ${1:ComponentName} = () => {",
+      "  return (",
+      "    <>",
+      "      $0",
+      "    </>",
+      "  )",
+      "}",
+      "",
+      "export default ${1:ComponentName}"
+    ],
+    "description": "React Arrow Function Component with prompted name"
+  },
+  "React Arrow Function Component with Props (named)": {
+    "prefix": "rafcp",
+    "body": [
+      "interface ${1:ComponentName}Props {",
+      "  $2",
+      "}",
+      "",
+      "const ${1:ComponentName} = ({ $3 }: ${1:ComponentName}Props) => {",
+      "  return (",
+      "    <>",
+      "      $0",
+      "    </>",
+      "  )",
+      "}",
+      "",
+      "export default ${1:ComponentName}"
+    ],
+    "description": "React Arrow Function Component with Props interface"
+  },
+  "React Function Component (named)": {
+    "prefix": "rfc",
+    "body": [
+      "export function ${1:ComponentName}() {",
+      "  return (",
+      "    <>",
+      "      $0",
+      "    </>",
+      "  )",
+      "}"
+    ],
+    "description": "React Function Component with prompted name"
+  },
+  "useState with name": {
+    "prefix": "uss",
+    "body": [
+      "const [${1:state}, set${1/(.*)/${1:/capitalize}/}] = useState<${2:type}>(${3:initialValue})"
+    ],
+    "description": "useState hook with prompted name"
+  },
+  "useEffect": {
+    "prefix": "uee",
+    "body": [
+      "useEffect(() => {",
+      "  $0",
+      "}, [${1:dependencies}])"
+    ],
+    "description": "useEffect hook"
+  },
+  "useCallback": {
+    "prefix": "ucc",
+    "body": [
+      "const ${1:name} = useCallback(($2) => {",
+      "  $0",
+      "}, [${3:dependencies}])"
+    ],
+    "description": "useCallback hook"
+  },
+  "useMemo": {
+    "prefix": "umm",
+    "body": [
+      "const ${1:name} = useMemo(() => {",
+      "  return $0",
+      "}, [${2:dependencies}])"
+    ],
+    "description": "useMemo hook"
+  }
+}

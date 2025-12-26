@@ -21,6 +21,7 @@
 [difftool]
   prompt = false
 [push]
+  autoSetupRemote = true
 	default = current
 [color]
 	ui = auto

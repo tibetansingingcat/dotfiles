@@ -25,17 +25,18 @@
   #'';
   # Keyboard
   system.keyboard.enableKeyMapping = true;
-  system.nvram.variables = {
-    "boot-args" = "-arm64e_preview_abi";
-  };
+  # system.nvram.variables = {
+  #   "boot-args" = "-arm64e_preview_abi";
+  # };
   environment.etc."sudoers.d/yabai".text = ''
     ${vars.user} ALL = (root) NOPASSWD: ${config.services.yabai.package}/bin/yabai --load-sa
   '';
 
   # Add ability to used TouchID for sudo authentication
   security.pam = {
-    #enableSudoTouchIdAuth = true;
-    enableCustomSudoTouchIdAuth = true;
+    enableSudoTouchIdAuth = true;
+    # Disabled custom version - it hardcodes nix store paths that break after GC
+    # enableCustomSudoTouchIdAuth = true;
     # Eventually the below line should work
     #enablePamReattach = true;
   };
@@ -66,7 +67,7 @@
     NSGlobalDomain.AppleShowAllExtensions = true;
     NSGlobalDomain.InitialKeyRepeat = 14;
     NSGlobalDomain.KeyRepeat = 1;
-    universalaccess.reduceMotion = true;
+    # universalaccess.reduceMotion = true; # Requires additional permissions on newer macOS
     WindowManager.StandardHideDesktopIcons = true;
   };
   # backwards compat; don't change

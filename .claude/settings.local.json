@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(nvim:*)",
+      "Bash(brew list:*)",
+      "Bash(echo:*)",
+      "Bash(dmesg)",
+      "Bash(~/.local/share/nvim/mason/bin/yaml-language-server:*)",
+      "Bash(node --version:*)",
+      "Bash(kill:*)",
+      "Bash(cat:*)",
+      "Bash(brew unlink:*)",
+      "Bash(brew uninstall:*)",
+      "Bash(age:*)",
+      "Bash(nix-shell:*)",
+      "Bash(git add:*)",
+      "Bash(log show:*)",
+      "Bash(nixswitch:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

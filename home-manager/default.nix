@@ -1,4 +1,4 @@
-{ config, pkgs, lib, vars, nix-colors, ... }:
+{ config, pkgs, lib, vars, nix-colors, sops-nix, ... }:
 let
   yabai = "${pkgs.yabai}/bin/yabai";
 in
@@ -8,6 +8,7 @@ in
     ./tmux.nix
     ./zsh.nix
     nix-colors.homeManagerModule
+    sops-nix.homeManagerModules.sops
   ];
   colorScheme = nix-colors.colorSchemes."catppuccin-mocha";
   # Don't change this when you change package input. Leave it alone.
@@ -32,11 +33,11 @@ in
     jq
     lua
     nodePackages.typescript
+    nodePackages.pnpm
     nodejs_22
     purescript
     lazygit
     awscli2
-    gh
     reattach-to-user-namespace
     rustup
     actionlint
@@ -47,6 +48,11 @@ in
     niv # easy dependency management for nix projects
     nodePackages.node2nix
     nodePackages.eslint
+    #nodePackages.next
+
+    # Secrets management
+    age
+    sops
   ] ++ lib.optionals stdenv.isDarwin [
     m-cli # useful macOS CLI commands
   ];
@@ -56,6 +62,7 @@ in
     CLICLOLOR = 1;
     EDITOR = "nvim";
     NPM_CONFIG_PREFIX = "$HOME/.node_modules";
+    PNPM_HOME = "$HOME/.local/share/pnpm";
   };
 
 
@@ -107,7 +114,7 @@ in
 
   xdg.configFile = {
     "kitty/launch.conf".text = ''
-      launch sh -c "tmux new -t main" -2
+      launch zsh -c "tmux new-session -A -s main"
     '';
     "nvim" = {
       #source = ./dotfiles/nvim;
@@ -128,4 +135,23 @@ in
   home.file.".gitconfig".source = ./dotfiles/gitconfig;
   home.file."sxm/.gitconfig".source = ./dotfiles/sxm-gitconfig;
   home.file."Library/Application Support/lazygit/config.yml".source = ./dotfiles/lazygit;
+
+  # Secrets management with sops-nix
+  sops = {
+    # Path to the age key for decryption (derived from SSH key)
+    age.sshKeyPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
+
+    # Default secrets file
+    defaultSopsFile = ../secrets/secrets.yaml;
+
+    # Define secrets to decrypt
+    # Secrets are decrypted to ~/.config/sops-nix/secrets/ by default
+    secrets = {
+      # Example: decrypt example_api_key from secrets.yaml
+      # Access at: config.sops.secrets.example_api_key.path
+      "localstack_auth_token" = { };
+      "ghe_token" = { };
+      "database/password" = { };
+    };
+  };
 }

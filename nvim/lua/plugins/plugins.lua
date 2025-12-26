@@ -1,33 +1,5 @@
 return {
   {
-    "hrsh7th/nvim-cmp",
-    dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      "L3MON4D3/LuaSnip",
-      "saadparwaiz1/cmp_luasnip",
-    },
-    config = function()
-      local cmp = require("cmp")
-      local luasnip = require("luasnip")
-
-      cmp.setup({
-        snippet = {
-          expand = function(args)
-            luasnip.lsp_expand(args.body)
-          end,
-        },
-        mapping = cmp.mapping.preset.insert({
-          ["<C-Space>"] = cmp.mapping.complete(),
-          ["<CR>"] = cmp.mapping.confirm({ select = true }),
-        }),
-        sources = {
-          { name = "nvim_lsp" },
-          { name = "luasnip" },
-        },
-      })
-    end,
-  },
-  {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     dependencies = {
@@ -112,11 +84,6 @@ return {
   {
     "neovim/nvim-lspconfig",
     init = function()
-      local keys = require("lazyvim.plugins.lsp.keymaps").get()
-      -- change a keymap
-      keys[#keys + 1] =
-        { "<a-cr>", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "codeAction" }
-
       -- vim.lsp.enable("postgres_lsp")
 
       local dap = require("dap")
@@ -136,10 +103,26 @@ return {
     end,
     opts = {
       servers = {
+        ["*"] = {
+          keys = {
+            { "<a-cr>", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "codeAction" },
+          },
+        },
         clangd = {
           cmd = { "clangd", "--fallback-style=none" },
           filetypes = { "c", "cpp" },
           single_file_support = true,
+        },
+        smithy_ls = {
+          cmd = {
+            "cs",
+            "launch",
+            "software.amazon.smithy:smithy-language-server:0.7.0",
+            "-M",
+            "software.amazon.smithy.lsp.Main",
+            "--",
+            "0",
+          },
         },
       },
     },
@@ -558,6 +541,23 @@ return {
           fd_opts = "--hidden --exclude .git",
         },
       })
+    end,
+  },
+  {
+    "nvim-java/nvim-java",
+    ft = { "java" },
+    dependencies = {
+      "nvim-java/lua-async-await",
+      "nvim-java/nvim-java-core",
+      "nvim-java/nvim-java-test",
+      "nvim-java/nvim-java-dap",
+      "MunifTanjim/nui.nvim",
+      "neovim/nvim-lspconfig",
+      "mfussenegger/nvim-dap",
+    },
+    config = function()
+      require("java").setup()
+      require("lspconfig").jdtls.setup({})
     end,
   },
 }

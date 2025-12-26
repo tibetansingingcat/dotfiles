@@ -1,0 +1,10 @@
+# This file defines which keys can decrypt which secrets
+keys:
+  - &wrose age1v5qutegvc5qcxhfkqd0kw02lt9ceva6nzljvf053mhypyehmr9rqq20nl6
+
+creation_rules:
+  # Default rule - all secrets can be decrypted by wrose's key
+  - path_regex: secrets/.*\.yaml$
+    key_groups:
+      - age:
+          - *wrose

@@ -130,12 +130,12 @@ bell_on_prompt() {
     tput bel
 }
 #add-zsh-hook precmd bell_on_prompt
-# start tmux automatically
+# start tmux automatically (only in Kitty terminal)
 if command tmux -V 2>&1 >/dev/null; then
   # This Environment variable is checked in order
   # to avoid nesting. Because when tmux starts a new
   # shell in it, it will try to launch tmux again!
-  if [ -z "$TMUX" ]; then
+  if [ -z "$TMUX" ] && [ "$TERM_PROGRAM" = "kitty" ]; then
     tmux
   fi
 fi

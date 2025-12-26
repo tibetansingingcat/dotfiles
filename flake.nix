@@ -21,9 +21,13 @@
     };
     # Like the Arch User Repository, but better :)
     nur.url = "github:nix-community/NUR";
+
+    # Secrets management
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, darwin, nixpkgs, home-manager, firefox-darwin, nur, nix-colors, impurity, ... }@inputs:
+  outputs = { self, darwin, nixpkgs, home-manager, firefox-darwin, nur, nix-colors, impurity, sops-nix, ... }@inputs:
     let
 
       vars = {
@@ -78,13 +82,15 @@
               nixpkgs = nixpkgsConfig;
               # `home-manager` config
               home-manager = {
-                extraSpecialArgs = { inherit nix-colors impurity vars; };
+                extraSpecialArgs = { inherit nix-colors impurity vars sops-nix; };
                 useGlobalPkgs = true;
                 useUserPackages = true;
                 backupFileExtension = "backup";
                 users.${vars.user} = ./home-manager;
               };
             }
+            # Secrets management
+            sops-nix.darwinModules.sops
           ];
         };
         streetspirit = darwinSystem {
@@ -99,13 +105,15 @@
               nixpkgs = nixpkgsConfig;
               # `home-manager` config
               home-manager = {
-                extraSpecialArgs = { inherit nix-colors impurity vars; };
+                extraSpecialArgs = { inherit nix-colors impurity vars sops-nix; };
                 useGlobalPkgs = true;
                 useUserPackages = true;
                 backupFileExtension = "backup";
                 users.${vars.user} = ./home-manager;
               };
             }
+            # Secrets management
+            sops-nix.darwinModules.sops
           ];
         };
       };
