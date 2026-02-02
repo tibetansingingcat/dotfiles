@@ -13,6 +13,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nix-colors.url = "github:misterio77/nix-colors";
     impurity.url = "github:outfoxxed/impurity.nix";
+    serena.url = "github:oraios/serena";
 
     # Simply required for sane management of Firefox on darwin
     firefox-darwin = {
@@ -27,7 +28,7 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, darwin, nixpkgs, home-manager, firefox-darwin, nur, nix-colors, impurity, sops-nix, ... }@inputs:
+  outputs = { self, darwin, nixpkgs, home-manager, firefox-darwin, nur, nix-colors, impurity, serena, sops-nix, ... }@inputs:
     let
 
       vars = {
@@ -82,7 +83,7 @@
               nixpkgs = nixpkgsConfig;
               # `home-manager` config
               home-manager = {
-                extraSpecialArgs = { inherit nix-colors impurity vars sops-nix; };
+                extraSpecialArgs = { inherit nix-colors impurity vars sops-nix serena; };
                 useGlobalPkgs = true;
                 useUserPackages = true;
                 backupFileExtension = "backup";
@@ -105,7 +106,7 @@
               nixpkgs = nixpkgsConfig;
               # `home-manager` config
               home-manager = {
-                extraSpecialArgs = { inherit nix-colors impurity vars sops-nix; };
+                extraSpecialArgs = { inherit nix-colors impurity vars sops-nix serena; };
                 useGlobalPkgs = true;
                 useUserPackages = true;
                 backupFileExtension = "backup";

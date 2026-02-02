@@ -35,6 +35,7 @@
       "karabiner-elements"
       "keka"
       "librewolf"
+      "linear-linear"
       # "neovide"
       "nikitabobko/tap/aerospace"
       "nheko"
@@ -121,6 +122,7 @@
       "typescript-language-server"
       "unibilium"
       "utf8proc"
+      "uv"
       "yajl"
       "yt-dlp"
     ];

@@ -46,6 +46,7 @@ in
     cachix # adding/managing alternative binary caches hosted by Cachix
     # comma # run software from without installing it
     niv # easy dependency management for nix projects
+    nixd # nix language server for LSP support
     nodePackages.node2nix
     nodePackages.eslint
     #nodePackages.next
@@ -151,6 +152,8 @@ in
       # Access at: config.sops.secrets.example_api_key.path
       "localstack_auth_token" = { };
       "ghe_token" = { };
+      "jira_personal_token" = { };
+      "jira_username" = { };
       "database/password" = { };
     };
   };
