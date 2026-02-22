@@ -3,13 +3,13 @@
 
   inputs = {
     # Package sets
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-24.11-darwin";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-25.11-darwin";
     nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
 
     # Environment/system management
-    darwin.url = "github:lnl7/nix-darwin/nix-darwin-24.11";
+    darwin.url = "github:lnl7/nix-darwin/nix-darwin-25.11";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager/release-24.11";
+    home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nix-colors.url = "github:misterio77/nix-colors";
     impurity.url = "github:outfoxxed/impurity.nix";
@@ -72,6 +72,7 @@
                 (self: super: {
                   #nixfmt-latest = nixfmt.packages."x86_64-darwin".nixfmt;
                   nodejs = super.nodejs_22;
+                  # buildGo125Module overlay no longer needed with nixpkgs 25.11
                 })
               ];
             }
@@ -83,7 +84,10 @@
               nixpkgs = nixpkgsConfig;
               # `home-manager` config
               home-manager = {
-                extraSpecialArgs = { inherit nix-colors impurity vars sops-nix serena; };
+                extraSpecialArgs = {
+                  inherit nix-colors impurity vars sops-nix serena;
+                  pkgs-unstable = import inputs.nixpkgs-unstable { system = "aarch64-darwin"; config.allowUnfree = true; };
+                };
                 useGlobalPkgs = true;
                 useUserPackages = true;
                 backupFileExtension = "backup";
@@ -98,6 +102,14 @@
           system = "aarch64-darwin";
           specialArgs = { inherit vars; };
           modules = attrValues self.darwinModules ++ [
+            {
+              nixpkgs.overlays = [
+                (self: super: {
+                  nodejs = super.nodejs_22;
+                  # buildGo125Module overlay no longer needed with nixpkgs 25.11
+                })
+              ];
+            }
             # Main `nix-darwin` config
             ./darwin
             # `home-manager` module
@@ -106,7 +118,10 @@
               nixpkgs = nixpkgsConfig;
               # `home-manager` config
               home-manager = {
-                extraSpecialArgs = { inherit nix-colors impurity vars sops-nix serena; };
+                extraSpecialArgs = {
+                  inherit nix-colors impurity vars sops-nix serena;
+                  pkgs-unstable = import inputs.nixpkgs-unstable { system = "aarch64-darwin"; config.allowUnfree = true; };
+                };
                 useGlobalPkgs = true;
                 useUserPackages = true;
                 backupFileExtension = "backup";
@@ -117,6 +132,8 @@
             sops-nix.darwinModules.sops
           ];
         };
+        # Alias for hostname
+        Mac = karmapolice;
       };
 
       # Overlays --------------------------------------------------------------- {{{

@@ -4,6 +4,10 @@
     ./jankyborders.nix
     ./pam.nix
   ];
+
+  # Required for nix-darwin 25.11+
+  system.primaryUser = vars.user;
+
   programs.zsh = {
     enable = true;
   };
@@ -34,7 +38,8 @@
 
   # Add ability to used TouchID for sudo authentication
   security.pam = {
-    enableSudoTouchIdAuth = true;
+    # Renamed in nix-darwin 25.11
+    services.sudo_local.touchIdAuth = true;
     # Disabled custom version - it hardcodes nix store paths that break after GC
     # enableCustomSudoTouchIdAuth = true;
     # Eventually the below line should work
@@ -43,7 +48,11 @@
   # Fonts
   fonts.packages = with pkgs; [
     recursive
-    nerdfonts
+    # nerdfonts was split into individual packages in 25.11
+    # Use: nerd-fonts.fira-code, nerd-fonts.hack, etc.
+    # Or install all with: (nerd-fonts.override { fonts = [ "FiraCode" "Hack" ]; })
+    nerd-fonts.fira-code
+    nerd-fonts.hack
   ];
   #services.nix-daemon.enable = true;
   #services.karabiner-elements.enable = true;

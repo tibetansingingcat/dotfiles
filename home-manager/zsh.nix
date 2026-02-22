@@ -12,6 +12,14 @@
       nixswitch = "darwin-rebuild switch --flake ~/.dotfiles#$(hostname -s)";
       nixup = "pushd ~/.dotfiles; nix flake update; nixswitch; popd";
       sbtc = "sbt --client";
+
+      # Email aliases
+      mailsync = "~/.local/bin/offlineimap-sync && notmuch new";
+      mail = "neomutt";
+      refresh-bridge-cert = "~/.dotfiles/scripts/refresh-bridge-cert.sh";
+      mailsearch = "notmuch search";
+      mailcount = "notmuch count";
+      maillogs = "tail -f ~/Library/Logs/offlineimap.log";
     };
     history = {
       ignoreDups = true;
@@ -40,7 +48,7 @@
       [ -r "${config.sops.secrets.jira_personal_token.path}" ] && export JIRA_PERSONAL_TOKEN="$(cat ${config.sops.secrets.jira_personal_token.path})"
       [ -r "${config.sops.secrets.jira_username.path}" ] && export JIRA_USERNAME="$(cat ${config.sops.secrets.jira_username.path})"
 
-      export PATH="$HOME/scripts:$HOME/bin:/opt/local/bin:/usr/local/bin:/Users/wrose/Library/Application Support/Coursier/bin:/bin:/usr/bin:/run/current-system/sw/bin:$HOME/.sxm/bin"
+      export PATH="$HOME/scripts:$HOME/bin:/usr/sbin:/opt/local/bin:/usr/local/bin:/Users/wrose/Library/Application Support/Coursier/bin:/bin:/usr/bin:/run/current-system/sw/bin:$HOME/.sxm/bin"
 
 
       # set TERMINFO to the terminfos delivered by the ncurses nix package
