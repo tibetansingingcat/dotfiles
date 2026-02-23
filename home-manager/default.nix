@@ -75,15 +75,23 @@ in
     vimAlias = true;
     vimdiffAlias = true;
     withNodeJs = true;
-    plugins = with pkgs.vimPlugins; [
-      nvim-treesitter.withAllGrammars
+    # Provide only treesitter parsers from Nix (they need valid signatures)
+    # LazyVim manages everything else
+    extraPackages = with pkgs; [
+      # Treesitter CLI for parser management
+      tree-sitter
     ];
   };
 
   programs.ssh = {
     enable = true;
-    forwardAgent = true;
+    # Explicitly disable default config to avoid future warnings
+    enableDefaultConfig = false;
     matchBlocks = {
+      # Apply forwardAgent globally
+      "*" = {
+        forwardAgent = true;
+      };
       keychain = {
         host = "*";
         extraOptions = {

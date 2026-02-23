@@ -173,42 +173,27 @@ return {
           file_ignore_patterns = {
             "node_modules",
             ".git'",
-          }, -- 🚫 make sure you’re not ignoring dotfiles here
+          }, -- 🚫 make sure you're not ignoring dotfiles here
         },
         pickers = {
           find_files = {
-            find_command = { "fd", "-HI", "--type", "f" },
+            -- Removed custom fd command - use telescope defaults to avoid crashes
+            hidden = true,
           },
         },
       })
-      telescope.load_extension("live_grep_args")
+      -- Temporarily disable live_grep_args to debug crashes
+      -- telescope.load_extension("live_grep_args")
     end,
   },
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
-      ensure_installed = {
-        "bash",
-        "c",
-        "cpp",
-        "gdscript",
-        "html",
-        "java",
-        "javascript",
-        "json",
-        "lua",
-        "markdown",
-        "markdown_inline",
-        "python",
-        "query",
-        "regex",
-        "scala",
-        "tsx",
-        "typescript",
-        "vim",
-        "yaml",
-      },
+      ensure_installed = {}, -- Never auto-install parsers
+      auto_install = false,   -- Disable auto-installation
+      sync_install = false,   -- Disable sync installation
     },
+    build = false, -- Don't compile anything
   },
   -- lualine component for metals
   {
