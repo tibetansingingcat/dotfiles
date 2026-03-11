@@ -3,6 +3,7 @@
     ./homebrew.nix
     ./jankyborders.nix
     ./pam.nix
+    ./spotlight.nix
   ];
 
   # Required for nix-darwin 25.11+
@@ -53,6 +54,7 @@
     # Or install all with: (nerd-fonts.override { fonts = [ "FiraCode" "Hack" ]; })
     nerd-fonts.fira-code
     nerd-fonts.hack
+    nerd-fonts.roboto-mono
   ];
   #services.nix-daemon.enable = true;
   #services.karabiner-elements.enable = true;
