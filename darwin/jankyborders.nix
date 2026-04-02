@@ -1,7 +1,6 @@
-{
-  config,
-  vars,
-  ...
+{ config
+, vars
+, ...
 }:
 
 let
@@ -14,6 +13,6 @@ in
     enable = true;
     width = 8.0;
     active_color = "0xff${activeColor}";
-    inactive_color = "0xff${normalColor}"; 
+    inactive_color = "0x00${normalColor}";
   };
 }
