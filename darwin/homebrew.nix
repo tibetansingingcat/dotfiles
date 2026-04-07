@@ -7,7 +7,6 @@
   };
   homebrew = {
     enable = true;
-    caskArgs.no_quarantine = true;
     global.brewfile = true;
     casks = [
       "aerospace"
@@ -15,16 +14,16 @@
       #"audacity"
       #"anki"
       "autodesk-fusion"
-      #"balenaetcher"
+      "balenaetcher"
       "bartender"
-      #"blender"
+      "blender"
       "beeper"
-      # "calibre"
+      "calibre"
       "crossover"
       "discord"
       "dropbox"
       "element"
-      # "godot"
+      "godot"
       "google-chrome"
       "google-drive"
       "handbrake-app"
@@ -101,6 +100,7 @@
       "mpfr"
       "minikube"
       "neovim"
+      "nvm"
       "netatalk"
       "okta-aws-cli"
       "openssl"
@@ -123,7 +123,7 @@
       "yt-dlp"
     ];
     masApps = {
-      "Bitwarden" = 1352778147;
+      #"Bitwarden" = 1352778147;
     };
     onActivation.cleanup = "zap";
     onActivation.autoUpdate = true;

@@ -49,6 +49,8 @@
 
       export PATH="$HOME/scripts:$HOME/bin:/usr/sbin:/opt/local/bin:/usr/local/bin:/Users/wrose/Library/Application Support/Coursier/bin:/bin:/usr/bin:/run/current-system/sw/bin:$HOME/.sxm/bin"
 
+      export NVM_DIR="$HOME/.nvm"
+      [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 
       # set TERMINFO to the terminfos delivered by the ncurses nix package
       if [ ! -f /etc/NIXOS ]; then

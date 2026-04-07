@@ -190,8 +190,8 @@ return {
     "nvim-treesitter/nvim-treesitter",
     opts = {
       ensure_installed = {}, -- Never auto-install parsers
-      auto_install = false,   -- Disable auto-installation
-      sync_install = false,   -- Disable sync installation
+      auto_install = false, -- Disable auto-installation
+      sync_install = false, -- Disable sync installation
     },
     build = false, -- Don't compile anything
   },
@@ -270,8 +270,10 @@ return {
         --serverVersion = "latest.snapshot",
         testUserInterface = "Test Explorer",
       }
-
-      metals_config.init_options.statusBarProvider = "on"
+      metals_config.init_options = {
+        disableFileWatcherRegistration = true,
+        statusBarProvider = "on",
+      }
 
       metals_config.on_attach = function(client, bufnr)
         require("metals").setup_dap()

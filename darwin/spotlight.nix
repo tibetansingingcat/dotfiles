@@ -8,8 +8,12 @@
   # Run on system activation to mark existing node_modules
   system.activationScripts.extraActivation.text = ''
     echo "Excluding node_modules from Spotlight indexing..."
-    find /Users/${vars.user} -type d -name "node_modules" -not -path "*/.*" 2>/dev/null | while read -r dir; do
-      touch "$dir/.metadata_never_index" 2>/dev/null || true
+    for searchDir in /Users/${vars.user}/dev /Users/${vars.user}/git /Users/${vars.user}/sxm; do
+      if [ -d "$searchDir" ]; then
+        find "$searchDir" -type d -name "node_modules" -not -path "*/.*" 2>/dev/null | while read -r dir; do
+          touch "$dir/.metadata_never_index" 2>/dev/null || true
+        done || true
+      fi
     done
   '';
 
@@ -20,9 +24,13 @@
         "${pkgs.bash}/bin/bash"
         "-c"
         ''
-          find /Users/${vars.user} -type d -name "node_modules" -not -path "*/.*" 2>/dev/null | while read -r dir; do
-            if [ ! -f "$dir/.metadata_never_index" ]; then
-              touch "$dir/.metadata_never_index" 2>/dev/null || true
+          for searchDir in /Users/${vars.user}/dev /Users/${vars.user}/git /Users/${vars.user}/sxm; do
+            if [ -d "$searchDir" ]; then
+              find "$searchDir" -type d -name "node_modules" -not -path "*/.*" 2>/dev/null | while read -r dir; do
+                if [ ! -f "$dir/.metadata_never_index" ]; then
+                  touch "$dir/.metadata_never_index" 2>/dev/null || true
+                fi
+              done || true
             fi
           done
         ''

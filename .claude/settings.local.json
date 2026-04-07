@@ -56,7 +56,8 @@
       "Bash(while read dir)",
       "Bash(do touch \"$dir/.metadata_never_index\" done echo \"Done! Verifying a few examples:\" find ~/sxm/codebase -name \".metadata_never_index\")",
       "Bash(nix flake check:*)",
-      "Bash(launchctl list:*)"
+      "Bash(launchctl list:*)",
+      "Bash(nix build:*)"
     ],
     "deny": [],
     "ask": []
