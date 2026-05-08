@@ -262,6 +262,14 @@ return {
         metals_config.capabilities = cmp_nvim_lsp.default_capabilities()
       end
 
+      metals_config.capabilities = vim.tbl_deep_extend("force", vim.lsp.protocol.make_client_capabilities(), {
+        workspace = {
+          didChangeWatchedFiles = {
+            dynamicRegistration = false,
+          },
+        },
+      })
+
       metals_config.settings = {
         showImplicitArguments = false,
         showImplicitConversionsAndClasses = false,
@@ -546,5 +554,36 @@ return {
       require("java").setup()
       require("lspconfig").jdtls.setup({})
     end,
+  },
+  {
+    "williamboman/mason.nvim",
+    opts = {
+      registries = {
+        "github:mason-org/mason-registry",
+        "github:Crashdummyy/mason-registry",
+      },
+    },
+  },
+  {
+    "ThePrimeagen/refactoring.nvim",
+    dependencies = {
+      "lewis6991/async.nvim",
+    },
+    opts = {
+      printf_statements = {
+        scala = { 'println("refactor_debug: %s")' },
+      },
+      print_var_statements = {
+        scala = { 'println(s"refactor_debug: ${%s}")' },
+      },
+    },
+    lazy = false,
+  },
+  {
+    "seblyng/roslyn.nvim",
+    ft = "cs",
+    opts = {
+      -- Leave empty for defaults; Mason's binary is auto-detected
+    },
   },
 }

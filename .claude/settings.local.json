@@ -57,7 +57,8 @@
       "Bash(do touch \"$dir/.metadata_never_index\" done echo \"Done! Verifying a few examples:\" find ~/sxm/codebase -name \".metadata_never_index\")",
       "Bash(nix flake check:*)",
       "Bash(launchctl list:*)",
-      "Bash(nix build:*)"
+      "Bash(nix build:*)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ],
     "deny": [],
     "ask": []

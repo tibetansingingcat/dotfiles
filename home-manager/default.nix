@@ -163,6 +163,7 @@ in
       "ghe_token" = { };
       "jira_personal_token" = { };
       "jira_username" = { };
+      "confluence_personal_token" = { };
       "database/password" = { };
       "protonmail_bridge_password" = { };
       "fastmail_app_password" = { };

@@ -76,6 +76,7 @@
       "cryptography"
       "diff-so-fancy"
       "dos2unix"
+      "dotnet"
       "ffmpeg"
       "gcc"
       "gh"

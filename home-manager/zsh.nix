@@ -46,6 +46,7 @@
       [ -r "${config.sops.secrets.ghe_token.path}" ] && export GITHUB_API_TOKEN="$(cat ${config.sops.secrets.ghe_token.path})"
       [ -r "${config.sops.secrets.jira_personal_token.path}" ] && export JIRA_PERSONAL_TOKEN="$(cat ${config.sops.secrets.jira_personal_token.path})"
       [ -r "${config.sops.secrets.jira_username.path}" ] && export JIRA_USERNAME="$(cat ${config.sops.secrets.jira_username.path})"
+      [ -r "${config.sops.secrets.confluence_personal_token.path}" ] && export CONFLUENCE_PERSONAL_TOKEN="$(cat ${config.sops.secrets.confluence_personal_token.path})"
 
       export PATH="$HOME/scripts:$HOME/bin:/usr/sbin:/opt/local/bin:/usr/local/bin:/Users/wrose/Library/Application Support/Coursier/bin:/bin:/usr/bin:/run/current-system/sw/bin:$HOME/.sxm/bin"
 

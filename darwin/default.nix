@@ -55,6 +55,7 @@
     nerd-fonts.fira-code
     nerd-fonts.hack
     nerd-fonts.roboto-mono
+    nerd-fonts.symbols-only
   ];
   #services.nix-daemon.enable = true;
   #services.karabiner-elements.enable = true;

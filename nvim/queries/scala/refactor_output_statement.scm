@@ -1,0 +1,17 @@
+[
+  (val_definition)
+  (var_definition)
+  (val_declaration)
+  (var_declaration)
+  (assignment_expression)
+  (if_expression)
+  (while_expression)
+  (do_while_expression)
+  (for_expression)
+  (match_expression)
+  (try_expression)
+  (return_expression)
+  (throw_expression)
+  (call_expression)
+  (block)
+] @output_statement
