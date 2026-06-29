@@ -63,7 +63,6 @@ in
     PAGER = "less";
     CLICLOLOR = 1;
     EDITOR = "nvim";
-    NPM_CONFIG_PREFIX = "$HOME/.node_modules";
     PNPM_HOME = "$HOME/.local/share/pnpm";
   };
 
