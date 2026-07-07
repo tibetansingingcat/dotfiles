@@ -9,7 +9,7 @@
     #shellAliases = import ../bash/aliases.nix;
     shellAliases = {
       l = "ls -Glah";
-      nixswitch = "darwin-rebuild switch --flake ~/.dotfiles#$(hostname -s)";
+      nixswitch = "sudo darwin-rebuild switch --flake ~/.dotfiles#$(hostname -s)";
       nixup = "pushd ~/.dotfiles; nix flake update; nixswitch; popd";
       sbtc = "sbt --client";
 
@@ -70,7 +70,6 @@
       export PATH="$HOME/.local/bin:$PATH"
       export PNPM_HOME="$HOME/.local/share/pnpm"
       export PATH="$PNPM_HOME:$PATH"
-      source $HOME/.sde/profile/profile.sh
 
       export ENABLE_TOOL_SEARCH=true 
       export NODE_EXTRA_CA_CERTS="$HOME/ca-certs/certs/combined_ca.pem"
@@ -109,7 +108,6 @@
     #   export PATH="$PATH:/etc/profiles/per-user/${vars.user}/bin:/Users/${vars.user}/.node_modules/bin:/sbin:$HOME/.rd/bin:/nix/var/nix/profiles/default/bin"
     #   export PATH="/opt/homebrew/opt/bison/bin:$PATH"
     #   export PATH="$HOME/.local/bin:$PATH"
-    #   source $HOME/.sde/profile/profile.sh
     #
     #   export NODE_EXTRA_CA_CERTS="$HOME/ca-certs/certs/combined_ca.pem"
     #   

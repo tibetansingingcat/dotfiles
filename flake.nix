@@ -3,13 +3,13 @@
 
   inputs = {
     # Package sets
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-25.11-darwin";
-    nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-26.05-darwin";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     # Environment/system management
-    darwin.url = "github:lnl7/nix-darwin/nix-darwin-25.11";
-    darwin.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager/release-25.11";
+    nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nix-colors.url = "github:misterio77/nix-colors";
     impurity.url = "github:outfoxxed/impurity.nix";
@@ -28,7 +28,7 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, darwin, nixpkgs, home-manager, firefox-darwin, nur, nix-colors, impurity, serena, sops-nix, ... }@inputs:
+  outputs = { self, nix-darwin, nixpkgs, home-manager, firefox-darwin, nur, nix-colors, impurity, serena, sops-nix, ... }@inputs:
     let
 
       vars = {
@@ -40,9 +40,8 @@
       };
       colorScheme = nix-colors.colorSchemes."catppuccin-mocha";
 
-      inherit (darwin.lib) darwinSystem;
+      inherit (nix-darwin.lib) darwinSystem;
       inherit (inputs.nixpkgs.lib) attrValues makeOverridable optionalAttrs singleton;
-      #inherit (sde-nix.packages.aarch64-darwin) sde;
 
       # Configuration for `nixpkgs`
       nixpkgsConfig = {
@@ -72,7 +71,7 @@
                 (self: super: {
                   #nixfmt-latest = nixfmt.packages."x86_64-darwin".nixfmt;
                   nodejs = super.nodejs_22;
-                  # buildGo125Module overlay no longer needed with nixpkgs 25.11
+                  # buildGo125Module overlay no longer needed with nixpkgs 26.05
                 })
               ];
             }
@@ -106,7 +105,41 @@
               nixpkgs.overlays = [
                 (self: super: {
                   nodejs = super.nodejs_22;
-                  # buildGo125Module overlay no longer needed with nixpkgs 25.11
+                  # buildGo125Module overlay no longer needed with nixpkgs 26.05
+                })
+              ];
+            }
+            # Main `nix-darwin` config
+            ./darwin
+            # `home-manager` module
+            home-manager.darwinModules.home-manager
+            {
+              nixpkgs = nixpkgsConfig;
+              # `home-manager` config
+              home-manager = {
+                extraSpecialArgs = {
+                  inherit nix-colors impurity vars sops-nix serena;
+                  pkgs-unstable = import inputs.nixpkgs-unstable { system = "aarch64-darwin"; config.allowUnfree = true; };
+                };
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                backupFileExtension = "backup";
+                users.${vars.user} = ./home-manager;
+              };
+            }
+            # Secrets management
+            sops-nix.darwinModules.sops
+          ];
+        };
+        myxomatosis = darwinSystem {
+          system = "aarch64-darwin";
+          specialArgs = { inherit vars; };
+          modules = attrValues self.darwinModules ++ [
+            {
+              nixpkgs.overlays = [
+                (self: super: {
+                  nodejs = super.nodejs_22;
+                  # buildGo125Module overlay no longer needed with nixpkgs 26.05
                 })
               ];
             }

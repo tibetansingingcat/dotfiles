@@ -13,7 +13,7 @@ in
   ];
   colorScheme = nix-colors.colorSchemes."catppuccin-mocha";
   # Don't change this when you change package input. Leave it alone.
-  home.stateVersion = "24.11";
+  home.stateVersion = "26.05";
   #home.enableNixpkgsReleaseCheck = false;
   # specify my home-manager configs
   home.packages = with pkgs; [
@@ -33,8 +33,6 @@ in
     idris2
     jq
     lua
-    nodePackages.typescript
-    nodePackages.pnpm
     nodejs_22
     purescript
     lazygit
@@ -48,9 +46,6 @@ in
     # comma # run software from without installing it
     niv # easy dependency management for nix projects
     nixd # nix language server for LSP support
-    nodePackages.node2nix
-    nodePackages.eslint
-    #nodePackages.next
 
     # Secrets management
     age
@@ -70,6 +65,7 @@ in
   programs.neovim = {
     enable = true;
     #package = pkgs.neovim-nightly;
+    sideloadInitLua = true;
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
@@ -86,20 +82,20 @@ in
     enable = true;
     # Explicitly disable default config to avoid future warnings
     enableDefaultConfig = false;
-    matchBlocks = {
-      # Apply forwardAgent globally
-      "*" = {
-        forwardAgent = true;
-      };
-      keychain = {
-        host = "*";
-        extraOptions = {
-          UseKeychain = "yes";
-          AddKeysToAgent = "yes";
-          IgnoreUnknown = "UseKeychain";
-        };
-      };
-    };
+    #matchBlocks = {
+    #  # Apply forwardAgent globally
+    #  "*" = {
+    #    forwardAgent = true;
+    #  };
+    #  keychain = {
+    #    host = "*";
+    #    extraOptions = {
+    #      UseKeychain = "yes";
+    #      AddKeysToAgent = "yes";
+    #      IgnoreUnknown = "UseKeychain";
+    #    };
+    #  };
+    #};
   };
 
   # Direnv, load and unload environment variables depending on the current directory.
@@ -141,7 +137,7 @@ in
     settings.font.size = 16;
   };
   home.file.".inputrc".source = ./dotfiles/inputrc;
-  home.file.".gitconfig".source = ./dotfiles/gitconfig;
+  #home.file.".gitconfig".source = ./dotfiles/gitconfig;
   home.file."sxm/.gitconfig".source = ./dotfiles/sxm-gitconfig;
   home.file."Library/Application Support/lazygit/config.yml".source = ./dotfiles/lazygit;
 
