@@ -43,6 +43,7 @@
     initContent = ''
       # Load secrets as environment variables
       [ -r "${config.sops.secrets.localstack_auth_token.path}" ] && export LOCALSTACK_AUTH_TOKEN="$(cat ${config.sops.secrets.localstack_auth_token.path})"
+      [ -r "${config.sops.secrets.github_token.path}" ] && export GITHUB_TOKEN="$(cat ${config.sops.secrets.github_token.path})"
       [ -r "${config.sops.secrets.ghe_token.path}" ] && export GITHUB_API_TOKEN="$(cat ${config.sops.secrets.ghe_token.path})"
       [ -r "${config.sops.secrets.jira_personal_token.path}" ] && export JIRA_PERSONAL_TOKEN="$(cat ${config.sops.secrets.jira_personal_token.path})"
       [ -r "${config.sops.secrets.jira_username.path}" ] && export JIRA_USERNAME="$(cat ${config.sops.secrets.jira_username.path})"

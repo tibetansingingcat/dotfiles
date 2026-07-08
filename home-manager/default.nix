@@ -160,6 +160,7 @@ in
       # Access at: config.sops.secrets.example_api_key.path
       "localstack_auth_token" = { };
       "ghe_token" = { };
+      "github_token" = { };
       "jira_personal_token" = { };
       "jira_username" = { };
       "confluence_personal_token" = { };
