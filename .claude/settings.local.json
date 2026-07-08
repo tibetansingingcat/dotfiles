@@ -58,7 +58,16 @@
       "Bash(nix flake check:*)",
       "Bash(launchctl list:*)",
       "Bash(nix build:*)",
-      "WebFetch(domain:raw.githubusercontent.com)"
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(ssh-to-age -i ~/.ssh/id_ed25519.pub)",
+      "Bash(nix run *)",
+      "Bash(nix eval *)",
+      "Read(//nix/store/8j45m48rlvxhywlkwlsf982y0wkqqg2g-source/skills/**)",
+      "Read(//Users/wrose/.config/**)",
+      "Read(//Users/wrose/**)",
+      "Bash(aerospace config *)",
+      "Bash(aerospace --version)",
+      "Read(//nix/store/**)"
     ],
     "deny": [],
     "ask": []

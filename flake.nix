@@ -15,6 +15,12 @@
     impurity.url = "github:outfoxxed/impurity.nix";
     serena.url = "github:oraios/serena";
 
+    # Claude Code skills (not a flake, just the repo source)
+    caveman = {
+      url = "github:JuliusBrussee/caveman";
+      flake = false;
+    };
+
     # Simply required for sane management of Firefox on darwin
     firefox-darwin = {
       url = "github:bandithedoge/nixpkgs-firefox-darwin";
@@ -28,7 +34,7 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nix-darwin, nixpkgs, home-manager, firefox-darwin, nur, nix-colors, impurity, serena, sops-nix, ... }@inputs:
+  outputs = { self, nix-darwin, nixpkgs, home-manager, firefox-darwin, nur, nix-colors, impurity, serena, caveman, sops-nix, ... }@inputs:
     let
 
       vars = {
@@ -41,130 +47,60 @@
       colorScheme = nix-colors.colorSchemes."catppuccin-mocha";
 
       inherit (nix-darwin.lib) darwinSystem;
-      inherit (inputs.nixpkgs.lib) attrValues makeOverridable optionalAttrs singleton;
+      inherit (inputs.nixpkgs.lib) attrValues;
+
+      # Builds a host from ./hosts/<hostname>/{default.nix,home.nix}.
+      # Each host module imports the shared ./darwin and ./home-manager
+      # configs and layers host-specific extras on top.
+      mkDarwinHost = hostname: darwinSystem {
+        system = "aarch64-darwin";
+        specialArgs = { inherit vars; };
+        modules = attrValues self.darwinModules ++ [
+          {
+            nixpkgs.overlays = [
+              (self: super: {
+                #nixfmt-latest = nixfmt.packages."x86_64-darwin".nixfmt;
+                nodejs = super.nodejs_22;
+                # buildGo125Module overlay no longer needed with nixpkgs 26.05
+              })
+            ];
+          }
+          # Host-specific `nix-darwin` config (imports ./darwin)
+          ./hosts/${hostname}
+          # `home-manager` module
+          home-manager.darwinModules.home-manager
+          {
+            nixpkgs = nixpkgsConfig;
+            # `home-manager` config
+            home-manager = {
+              extraSpecialArgs = {
+                inherit nix-colors impurity vars sops-nix serena caveman;
+                pkgs-unstable = import inputs.nixpkgs-unstable { system = "aarch64-darwin"; config.allowUnfree = true; };
+              };
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              backupFileExtension = "backup";
+              users.${vars.user} = import ./hosts/${hostname}/home.nix;
+            };
+          }
+          # Secrets management
+          sops-nix.darwinModules.sops
+        ];
+      };
 
       # Configuration for `nixpkgs`
       nixpkgsConfig = {
         config = { allowUnfree = true; };
-        overlays = attrValues self.overlays ++ singleton (
-          # Sub in x86 version of packages that don't build on Apple Silicon yet
-          final: prev: (optionalAttrs (prev.stdenv.system == "aarch64-darwin") {
-            inherit (final.pkgs-x86)
-              idris2
-              nix-index
-              niv
-              purescript;
-          })
-        );
+        overlays = attrValues self.overlays;
       };
     in
     {
       # My `nix-darwin` configs
 
       darwinConfigurations = rec {
-        karmapolice = darwinSystem {
-          system = "aarch64-darwin";
-          specialArgs = { inherit vars; };
-          modules = attrValues self.darwinModules ++ [
-            {
-              nixpkgs.overlays = [
-                (self: super: {
-                  #nixfmt-latest = nixfmt.packages."x86_64-darwin".nixfmt;
-                  nodejs = super.nodejs_22;
-                  # buildGo125Module overlay no longer needed with nixpkgs 26.05
-                })
-              ];
-            }
-            # Main `nix-darwin` config
-            ./darwin
-            # `home-manager` module
-            home-manager.darwinModules.home-manager
-            {
-              nixpkgs = nixpkgsConfig;
-              # `home-manager` config
-              home-manager = {
-                extraSpecialArgs = {
-                  inherit nix-colors impurity vars sops-nix serena;
-                  pkgs-unstable = import inputs.nixpkgs-unstable { system = "aarch64-darwin"; config.allowUnfree = true; };
-                };
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                backupFileExtension = "backup";
-                users.${vars.user} = ./home-manager;
-              };
-            }
-            # Secrets management
-            sops-nix.darwinModules.sops
-          ];
-        };
-        streetspirit = darwinSystem {
-          system = "aarch64-darwin";
-          specialArgs = { inherit vars; };
-          modules = attrValues self.darwinModules ++ [
-            {
-              nixpkgs.overlays = [
-                (self: super: {
-                  nodejs = super.nodejs_22;
-                  # buildGo125Module overlay no longer needed with nixpkgs 26.05
-                })
-              ];
-            }
-            # Main `nix-darwin` config
-            ./darwin
-            # `home-manager` module
-            home-manager.darwinModules.home-manager
-            {
-              nixpkgs = nixpkgsConfig;
-              # `home-manager` config
-              home-manager = {
-                extraSpecialArgs = {
-                  inherit nix-colors impurity vars sops-nix serena;
-                  pkgs-unstable = import inputs.nixpkgs-unstable { system = "aarch64-darwin"; config.allowUnfree = true; };
-                };
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                backupFileExtension = "backup";
-                users.${vars.user} = ./home-manager;
-              };
-            }
-            # Secrets management
-            sops-nix.darwinModules.sops
-          ];
-        };
-        myxomatosis = darwinSystem {
-          system = "aarch64-darwin";
-          specialArgs = { inherit vars; };
-          modules = attrValues self.darwinModules ++ [
-            {
-              nixpkgs.overlays = [
-                (self: super: {
-                  nodejs = super.nodejs_22;
-                  # buildGo125Module overlay no longer needed with nixpkgs 26.05
-                })
-              ];
-            }
-            # Main `nix-darwin` config
-            ./darwin
-            # `home-manager` module
-            home-manager.darwinModules.home-manager
-            {
-              nixpkgs = nixpkgsConfig;
-              # `home-manager` config
-              home-manager = {
-                extraSpecialArgs = {
-                  inherit nix-colors impurity vars sops-nix serena;
-                  pkgs-unstable = import inputs.nixpkgs-unstable { system = "aarch64-darwin"; config.allowUnfree = true; };
-                };
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                backupFileExtension = "backup";
-                users.${vars.user} = ./home-manager;
-              };
-            }
-            # Secrets management
-            sops-nix.darwinModules.sops
-          ];
-        };
+        karmapolice = mkDarwinHost "karmapolice";
+        streetspirit = mkDarwinHost "streetspirit";
+        myxomatosis = mkDarwinHost "myxomatosis";
         # Alias for hostname
         Mac = karmapolice;
       };
@@ -172,27 +108,9 @@
       # Overlays --------------------------------------------------------------- {{{
 
       overlays = {
-        # Overlays to add various packages into package set
-        comma = final: prev: {
-          comma = import inputs.comma { inherit (prev) pkgs; };
-        };
-
         firefox-darwin = firefox-darwin.overlay;
 
         nur = nur.overlays.default;
-
-        # Overlay useful on Macs with Apple Silicon
-        apple-silicon = final: prev: optionalAttrs (prev.stdenv.system == "aarch64-darwin") {
-          # Add access to x86 packages system is running Apple Silicon
-          pkgs-x86 = import inputs.nixpkgs {
-            system = "x86_64-darwin";
-            inherit (nixpkgsConfig) config;
-          };
-        };
-      };
-
-      commonModules = {
-        colors = import ./home-manager/colors.nix;
       };
 
       darwinModules = {

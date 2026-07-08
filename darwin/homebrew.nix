@@ -8,67 +8,29 @@
   homebrew = {
     enable = true;
     global.brewfile = true;
+    # Casks common to every machine. Host-specific casks live in
+    # hosts/<name>/default.nix and roles/personal/darwin.nix.
     casks = [
       "aerospace"
-      #"aldente"
-      #"audacity"
-      #"anki"
-      #"autodesk-fusion"
       "balenaetcher"
-      #"bartender"
-      #"blender"
-      #"beeper"
       "calibre"
-      #"crossover"
-      #"discord"
-      #"dropbox"
-      #"element"
-      #"godot"
-      #"google-chrome"
+      "claude"
       "google-drive"
       "handbrake-app"
       "insomnia"
       "jetbrains-toolbox"
       "karabiner-elements"
       "keka"
-      #"letterboxd/tools/letterboxd-setup"
-      #"linear-linear"
       "nikitabobko/tap/aerospace"
       "nheko"
-      #"notion"
-      #"obs"
-      #"obsidian"
-      #"plex"
-      #"proton-drive"
-      #"proton-mail"
-      #"proton-mail-bridge"
       "proton-pass"
-      #"protonvpn"
       "raycast"
       "slack"
-      #"spotify"
       "signal"
-      #"steam"
-      #"telegram"
-      "tidal"
-      "temurin@21"
-      "temurin@25"
-      #"transmission-remote-gui"
-      #"unity-hub"
-      #"utm"
       "visual-studio-code"
-      #"vlc"
-      #"warp"
-      #"whisky"
-      #"zoom"
-      "zulu@8"
     ];
     taps = [
       "nikitabobko/tap"
-      {
-        name = "letterboxd/tools";
-        clone_target = "git@github.com:letterboxd/homebrew-tools.git";
-      }
     ];
     brews = [
       "autoconf"

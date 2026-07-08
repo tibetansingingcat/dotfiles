@@ -4,6 +4,7 @@ let
 in
 {
   imports = [
+    ./claude-code.nix
     ./kitty.nix
     ./tmux.nix
     ./zsh.nix
@@ -43,7 +44,6 @@ in
 
     # Useful nix related tools
     cachix # adding/managing alternative binary caches hosted by Cachix
-    # comma # run software from without installing it
     niv # easy dependency management for nix projects
     nixd # nix language server for LSP support
 
@@ -82,20 +82,7 @@ in
     enable = true;
     # Explicitly disable default config to avoid future warnings
     enableDefaultConfig = false;
-    #matchBlocks = {
-    #  # Apply forwardAgent globally
-    #  "*" = {
-    #    forwardAgent = true;
-    #  };
-    #  keychain = {
-    #    host = "*";
-    #    extraOptions = {
-    #      UseKeychain = "yes";
-    #      AddKeysToAgent = "yes";
-    #      IgnoreUnknown = "UseKeychain";
-    #    };
-    #  };
-    #};
+    # matchBlocks (forwardAgent, keychain) live in roles/personal/home.nix
   };
 
   # Direnv, load and unload environment variables depending on the current directory.
@@ -137,8 +124,10 @@ in
     settings.font.size = 16;
   };
   home.file.".inputrc".source = ./dotfiles/inputrc;
-  #home.file.".gitconfig".source = ./dotfiles/gitconfig;
-  home.file."sxm/.gitconfig".source = ./dotfiles/sxm-gitconfig;
+  # Referenced by core.excludesfile in dotfiles/gitconfig
+  home.file.".gitignore_global".source = ./dotfiles/gitignore_global;
+  home.file.".aerospace.toml".source = ./dotfiles/aerospace.toml;
+  # .gitconfig and sxm/.gitconfig are host-specific — see roles/personal/home.nix
   home.file."Library/Application Support/lazygit/config.yml".source = ./dotfiles/lazygit;
 
   # Secrets management with sops-nix
