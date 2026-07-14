@@ -317,7 +317,17 @@ return {
         mode = { "n", "v" },
       },
     },
-    opts = {},
+    -- Single bottom pane with process output only (no repl/scopes/watches).
+    -- Add more elements here if wanted, e.g. { id = "scopes", size = 0.25 }.
+    opts = {
+      layouts = {
+        {
+          elements = { { id = "console", size = 1.0 } },
+          size = 15,
+          position = "bottom",
+        },
+      },
+    },
     config = function(_, opts)
       local dap = require("dap")
       local dapui = require("dapui")
@@ -493,14 +503,9 @@ return {
     },
     lazy = false,
   },
-  {
-    "vhyrro/luarocks.nvim",
-    priority = 1000,
-    config = true,
-  },
   -- {
   --   "nvim-neorg/neorg",
-  --   dependencies = { "luarocks.nvim" },
+  --   dependencies = { "vhyrro/luarocks.nvim" },
   --   lazy = false, -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
   --   version = "*", -- Pin Neorg to the latest stable release
   --   config = true,
@@ -538,25 +543,25 @@ return {
       })
     end,
   },
+  -- Java handled by LazyVim extra (lazyvim.plugins.extras.lang.java / nvim-jdtls)
   {
-    "nvim-java/nvim-java",
-    ft = { "java" },
-    dependencies = {
-      "nvim-java/lua-async-await",
-      "nvim-java/nvim-java-core",
-      "nvim-java/nvim-java-test",
-      "nvim-java/nvim-java-dap",
-      "MunifTanjim/nui.nvim",
-      "neovim/nvim-lspconfig",
-      "mfussenegger/nvim-dap",
+    "mfussenegger/nvim-jdtls",
+    opts = {
+      settings = {
+        java = {
+          compile = {
+            -- ECJ's annotation-based null analysis produces false "dead code"
+            -- warnings against unannotated libraries (e.g. cactuslab CQB.uniqueResult)
+            nullAnalysis = {
+              mode = "disabled",
+            },
+          },
+        },
+      },
     },
-    config = function()
-      require("java").setup()
-      require("lspconfig").jdtls.setup({})
-    end,
   },
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = {
       registries = {
         "github:mason-org/mason-registry",

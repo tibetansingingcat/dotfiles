@@ -41,6 +41,7 @@ in
     reattach-to-user-namespace
     rustup
     actionlint
+    postgresql_17 # psql client (also used by vim-dadbod)
 
     # Useful nix related tools
     cachix # adding/managing alternative binary caches hosted by Cachix
