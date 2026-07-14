@@ -50,7 +50,7 @@ automatically-unhide-macos-hidden-apps = false
 # even when they are invisible.
 # This config option is only available since 'config-version = 2'
 # Fallback value (if you omit the key): persistent-workspaces = []
-persistent-workspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B",
+persistent-workspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "A", "B",
                          "C", "D", "E", "F", "G", "I", "M", "N", "O", "P", "Q",
                          "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 
@@ -63,7 +63,7 @@ focus-follows-mouse.enabled = false
 
 # Possible values: (qwerty|dvorak|colemak)
 # See https://nikitabobko.github.io/AeroSpace/guide#key-mapping
-key-mapping.preset = 'qwerty'
+key-mapping.preset = 'colemak'
 
 # Gaps between windows (inner-*) and between monitor edges (outer-*).
 # Possible values:
@@ -79,6 +79,22 @@ gaps.outer.left =       0
 gaps.outer.bottom =     0
 gaps.outer.top =        0
 gaps.outer.right =      0
+
+# See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
+# Patterns are case-insensitive regex matched against monitor names; arrays are
+# fallback chains, first connected match wins. 'secondary' only matches when
+# exactly two monitors are connected (e.g. laptop + portable at home).
+[workspace-to-monitor-force-assignment]
+1 = 'main'
+2 = 'main'
+3 = 'main'
+4 = 'main'
+5 = ['lg ultrafine', 'secondary', 'main']
+6 = ['lg ultrafine', 'secondary', 'main']
+7 = ['lg ultrafine', 'secondary', 'main']
+8 = ['lg ultrafine', 'secondary', 'main']
+9 = ['built-in', 'main']
+0 = ['built-in', 'main']
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -143,6 +159,7 @@ gaps.outer.right =      0
     alt-7 = 'workspace 7'
     alt-8 = 'workspace 8'
     alt-9 = 'workspace 9'
+    alt-0 = 'workspace 0'
     alt-a = 'workspace A' # In your config, you can drop workspace bindings that you don't need
     alt-b = 'workspace B'
     alt-c = 'workspace C'
@@ -176,6 +193,7 @@ gaps.outer.right =      0
     alt-shift-7 = 'move-node-to-workspace 7'
     alt-shift-8 = 'move-node-to-workspace 8'
     alt-shift-9 = 'move-node-to-workspace 9'
+    alt-shift-0 = 'move-node-to-workspace 0'
     alt-shift-a = 'move-node-to-workspace A'
     alt-shift-b = 'move-node-to-workspace B'
     alt-shift-c = 'move-node-to-workspace C'
@@ -203,6 +221,10 @@ gaps.outer.right =      0
     alt-tab = 'workspace-back-and-forth'
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
     alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+    # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-monitor
+    alt-shift-period = 'move-node-to-monitor --wrap-around next --focus-follows-window'
+    # See: https://nikitabobko.github.io/AeroSpace/commands#focus-monitor
+    alt-period = 'focus-monitor --wrap-around next'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#mode
     alt-shift-semicolon = 'mode service'
