@@ -19,15 +19,11 @@
     delta
     mono
     pam-reattach
+    ssh-to-age
     zstd
   ];
   nix.enable = false;
-  #nix.extraOptions = ''
-  #  auto-optimise-store = true
-  #  experimental-features = nix-command flakes
-  #'' + lib.optionalString (pkgs.system == "aarch64-darwin") ''
-  #  extra-platforms = x86_64-darwin aarch64-darwin
-  #'';
+  #
   # Keyboard
   system.keyboard.enableKeyMapping = true;
   # system.nvram.variables = {

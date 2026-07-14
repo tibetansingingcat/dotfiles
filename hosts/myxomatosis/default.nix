@@ -12,6 +12,8 @@
       }
     ];
     casks = [
+      "1password"
+      "dbeaver-community"
       "temurin@21"
       "temurin@25"
       "zulu@8"
