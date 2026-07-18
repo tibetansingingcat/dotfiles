@@ -4,18 +4,10 @@
   home.file.".gitconfig".source = ../../home-manager/dotfiles/gitconfig;
   home.file."sxm/.gitconfig".source = ../../home-manager/dotfiles/sxm-gitconfig;
 
-  programs.ssh.matchBlocks = {
-    # Apply forwardAgent globally
-    "*" = {
-      forwardAgent = true;
-    };
-    keychain = {
-      host = "*";
-      extraOptions = {
-        UseKeychain = "yes";
-        AddKeysToAgent = "yes";
-        IgnoreUnknown = "UseKeychain";
-      };
-    };
+  programs.ssh.settings."*" = {
+    ForwardAgent = true;
+    UseKeychain = "yes";
+    AddKeysToAgent = "yes";
+    IgnoreUnknown = "UseKeychain";
   };
 }

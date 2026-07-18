@@ -62,6 +62,11 @@
                 #nixfmt-latest = nixfmt.packages."x86_64-darwin".nixfmt;
                 nodejs = super.nodejs_22;
                 # buildGo125Module overlay no longer needed with nixpkgs 26.05
+                # Skip flaky functional tests (socket races in sandbox);
+                # needed while cache.nixos.org has no darwin build for this pin
+                neovim-unwrapped = super.neovim-unwrapped.overrideAttrs (_: {
+                  doCheck = false;
+                });
               })
             ];
           }

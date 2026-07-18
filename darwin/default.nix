@@ -77,6 +77,12 @@
     NSGlobalDomain.KeyRepeat = 1;
     # universalaccess.reduceMotion = true; # Requires additional permissions on newer macOS
     WindowManager.StandardHideDesktopIcons = true;
+    # Tahoe (macOS 26) Liquid Glass tweaks; unknown keys are inert on older macOS
+    CustomUserPreferences.NSGlobalDomain = {
+      NSSplitViewItemSidebarDefaultsToFloatingAppearance = false;
+      NSConvolutionOverride1 = 16.0;
+      NSMenuEnableActionImages = false;
+    };
   };
   # backwards compat; don't change
   system.stateVersion = 5;

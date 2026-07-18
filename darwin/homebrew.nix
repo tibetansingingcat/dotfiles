@@ -24,6 +24,7 @@
       "nikitabobko/tap/aerospace"
       "nheko"
       "proton-pass"
+      "qspace-pro"
       "raycast"
       "slack"
       "signal"
@@ -65,6 +66,7 @@
       "localstack"
       "lsof"
       "luajit"
+      "mas"
       "luv"
       "lzlib"
       "imagemagick"
@@ -72,7 +74,6 @@
       "minikube"
       "neovim"
       "nvm"
-      "netatalk"
       "okta-aws-cli"
       "openssl"
       "pipx"
@@ -94,7 +95,18 @@
       "yt-dlp"
     ];
     masApps = {
-      #"Bitwarden" = 1352778147;
+      "Amazon Kindle" = 302584613;
+      "Todoist" = 585829637;
+      # Safari extensions
+      "Noir" = 1592917505;
+      "Vimari" = 1480933944;
+      "Kagi for Safari" = 1622835804;
+      "Ghostery Privacy Ad Blocker" = 6504861501;
+      "AdGuard Mini" = 1440147259;
+      "Tampermonkey Classic" = 1482490089;
+      "Octotree" = 1457450145;
+      "Command X" = 6448461551;
+      "10ten Japanese Reader" = 1573540634;
     };
     onActivation.cleanup = "zap";
     onActivation.autoUpdate = true;

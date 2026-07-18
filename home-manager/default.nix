@@ -79,6 +79,17 @@ in
     ];
   };
 
+  # Make QSpace Pro the handler for opening folders (Finder itself can't be
+  # replaced; this covers folder-opens from other apps). Skips if not installed.
+  home.activation.setDefaultFileManager = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    if [ -d "/Applications/QSpace Pro.app" ]; then
+      qspaceId=$(/usr/bin/osascript -e 'id of app "QSpace Pro"' 2>/dev/null || true)
+      if [ -n "$qspaceId" ]; then
+        run ${pkgs.duti}/bin/duti -s "$qspaceId" public.folder viewer || true
+      fi
+    fi
+  '';
+
   programs.ssh = {
     enable = true;
     # Explicitly disable default config to avoid future warnings
@@ -133,8 +144,9 @@ in
 
   # Secrets management with sops-nix
   sops = {
-    # Path to the age key for decryption (derived from SSH key)
-    age.sshKeyPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
+    # Plaintext age key — the SSH key is passphrase-protected and would hang
+    # activation waiting for a prompt that darwin-rebuild swallows
+    age.keyFile = "${config.home.homeDirectory}/Library/Application Support/sops/age/keys.txt";
 
     # Default secrets file
     defaultSopsFile = ../secrets/secrets.yaml;
