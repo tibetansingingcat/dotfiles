@@ -23,6 +23,7 @@
       "keka"
       "nikitabobko/tap/aerospace"
       "nheko"
+      "notion"
       "proton-pass"
       "qspace-pro"
       "raycast"

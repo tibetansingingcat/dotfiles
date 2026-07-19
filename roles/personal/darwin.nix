@@ -14,7 +14,6 @@
     "google-chrome"
     "linear"
     "megasync"
-    "notion"
     "obs"
     "obsidian"
     "openemu"
