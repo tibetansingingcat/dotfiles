@@ -488,21 +488,6 @@ return {
       vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
     end,
   },
-  {
-    "numToStr/Comment.nvim",
-    opts = {
-      -- add any options here
-    },
-    keys = {
-      {
-        "<leader>/",
-        mode = { "v" },
-        "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
-        desc = "comment toggle",
-      },
-    },
-    lazy = false,
-  },
   -- {
   --   "nvim-neorg/neorg",
   --   dependencies = { "vhyrro/luarocks.nvim" },
