@@ -5,6 +5,9 @@
   ];
 
   homebrew = {
+    masApps = {
+      "WireGuard" = 1451685025;
+    };
     taps = [
       {
         name = "letterboxd/tools";

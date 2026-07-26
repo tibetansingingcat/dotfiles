@@ -82,17 +82,23 @@ gaps.outer.right =      0
 
 # See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 # Patterns are case-insensitive regex matched against monitor names; arrays are
-# fallback chains, first connected match wins. 'secondary' only matches when
-# exactly two monitors are connected (e.g. laptop + portable at home).
+# fallback chains, first connected match wins. Externals are pinned by name
+# rather than the 'secondary' keyword, because 'secondary' resolves to whichever
+# monitor macOS doesn't mark as main -- at a hot desk the built-in is macOS-main,
+# so 'secondary' would grab the external and we could not steer 1-4 vs 5-8
+# independently. Permanent setup (2 externals + built-in):
+#   1-4 -> DELL U2725QE, 5-8 -> LG UltraFine, 9-0 -> built-in
+# Fallbacks keep 1-4/5-8 landing on any external present, else the built-in,
+# so a laptop-only session still works.
 [workspace-to-monitor-force-assignment]
-1 = 'main'
-2 = 'main'
-3 = 'main'
-4 = 'main'
-5 = ['lg ultrafine', 'secondary', 'main']
-6 = ['lg ultrafine', 'secondary', 'main']
-7 = ['lg ultrafine', 'secondary', 'main']
-8 = ['lg ultrafine', 'secondary', 'main']
+1 = ['dell u2725qe', 'lg ultrafine', 'main']
+2 = ['dell u2725qe', 'lg ultrafine', 'main']
+3 = ['dell u2725qe', 'lg ultrafine', 'main']
+4 = ['dell u2725qe', 'lg ultrafine', 'main']
+5 = ['lg ultrafine', 'dell u2725qe', 'built-in']
+6 = ['lg ultrafine', 'dell u2725qe', 'built-in']
+7 = ['lg ultrafine', 'dell u2725qe', 'built-in']
+8 = ['lg ultrafine', 'dell u2725qe', 'built-in']
 9 = ['built-in', 'main']
 0 = ['built-in', 'main']
 

@@ -90,6 +90,18 @@ in
     fi
   '';
 
+  # Print an unmistakable banner at the very end of activation. Ordered after
+  # 'sops-nix', which is the last built-in home-manager activation entry, so
+  # this is the final thing a successful `darwin-rebuild switch` prints.
+  # Suppressed on dry-run activations so it never reports a false success.
+  home.activation.switchSucceeded = lib.hm.dag.entryAfter [ "sops-nix" ] ''
+    if [[ ! -v DRY_RUN ]]; then
+      echo ""
+      echo "  ✅  rebuild + switch complete — your configuration is now live."
+      echo ""
+    fi
+  '';
+
   programs.ssh = {
     enable = true;
     # Explicitly disable default config to avoid future warnings
@@ -126,7 +138,12 @@ in
       recursive = true;
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/nvim";
     };
-    "karabiner/karabiner.json".source = ./dotfiles/karabiner.json;
+    # Writable out-of-store symlink: Karabiner-Elements needs to write back to
+    # this file to persist per-device settings (e.g. enabling "Modify events"
+    # for a newly connected keyboard). A plain store symlink is read-only, so
+    # those GUI toggles silently fail to save. Edits now land in the repo file.
+    "karabiner/karabiner.json".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/home-manager/dotfiles/karabiner.json";
   };
   programs.starship.enable = true;
   programs.starship.enableZshIntegration = true;

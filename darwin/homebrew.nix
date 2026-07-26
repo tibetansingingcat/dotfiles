@@ -13,6 +13,7 @@
     casks = [
       "aerospace"
       "balenaetcher"
+      "bettermouse"
       "calibre"
       "claude"
       "google-drive"

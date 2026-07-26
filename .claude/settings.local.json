@@ -106,7 +106,13 @@
       "Bash(launchctl print *)",
       "Bash(plutil -p ~/Library/LaunchAgents/org.nix-community.home.sops-nix.plist)",
       "Bash(darwin-rebuild --list-generations)",
-      "Bash(sudo -n /run/current-system/sw/bin/darwin-rebuild --list-generations)"
+      "Bash(sudo -n /run/current-system/sw/bin/darwin-rebuild --list-generations)",
+      "Bash(java -version)",
+      "Bash(/usr/libexec/java_home -V)",
+      "Bash(zsh -lc 'echo $JAVA_HOME; java -version')",
+      "Bash(systemextensionsctl list *)",
+      "Bash(awk '{print $11, $12, $13}')",
+      "Bash(git commit -m ' *)"
     ],
     "deny": [],
     "ask": []
