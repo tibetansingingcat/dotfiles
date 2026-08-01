@@ -112,7 +112,17 @@
       "Bash(zsh -lc 'echo $JAVA_HOME; java -version')",
       "Bash(systemextensionsctl list *)",
       "Bash(awk '{print $11, $12, $13}')",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(git -C /Users/wrose/.dotfiles log --oneline main..letterboxd)",
+      "Bash(git -C /Users/wrose/.dotfiles status --short)",
+      "Bash(git -C /Users/wrose/.dotfiles diff main...letterboxd --stat)",
+      "Bash(git -C /Users/wrose/.dotfiles log --all --oneline -S \"masApps\")",
+      "Bash(git -C /Users/wrose/.dotfiles log --all --oneline -- darwin/homebrew.nix)",
+      "Bash(git -C /Users/wrose/.dotfiles log --all --oneline -S \"Dato\" -- darwin/homebrew.nix)",
+      "Bash(git -C /Users/wrose/.dotfiles log --all -p -U0 -- darwin/homebrew.nix)",
+      "Bash(mas version *)",
+      "Bash(mas search *)",
+      "Bash(mas install *)"
     ],
     "deny": [],
     "ask": []

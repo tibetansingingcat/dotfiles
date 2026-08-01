@@ -97,7 +97,7 @@
       "yt-dlp"
     ];
     masApps = {
-      #"Amazon Kindle" = 302584613;
+      "Dato" = 1470584107;
       "Todoist" = 585829637;
       # Safari extensions
       "Noir" = 1592917505;
