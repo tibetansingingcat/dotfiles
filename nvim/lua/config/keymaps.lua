@@ -11,5 +11,6 @@ end, { desc = "Select refactor" })
 -- Comment toggle via Neovim's built-in commenting (gc/gcc). remap = true so it
 -- resolves to the native <Plug> mappings. Replaces Comment.nvim, which crashed
 -- on filetypes without a treesitter parser (e.g. nix) on Neovim 0.11+.
+-- Visual mode only: in normal mode <leader>/ stays LazyVim's grep, and gcc
+-- already toggles the current line.
 vim.keymap.set("x", "<leader>/", "gc", { remap = true, desc = "comment toggle" })
-vim.keymap.set("n", "<leader>/", "gcc", { remap = true, desc = "comment toggle" })

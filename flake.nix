@@ -15,9 +15,28 @@
     impurity.url = "github:outfoxxed/impurity.nix";
     serena.url = "github:oraios/serena";
 
+    # Claude Code itself. Tracks upstream releases hourly; nixpkgs lags far
+    # enough behind to miss current models. Deliberately not `follows`-ing
+    # nixpkgs, so builds stay cache hits against claude-code.cachix.org.
+    claude-code-nix.url = "github:sadjow/claude-code-nix";
+
+    # Maven/JVM dependency API lookup: provides both the `cellar` CLI and a
+    # Claude Code plugin at the repo root.
+    cellar.url = "github:VirtusLab/cellar";
+
     # Claude Code skills (not a flake, just the repo source)
     caveman = {
       url = "github:JuliusBrussee/caveman";
+      flake = false;
+    };
+
+    # Claude Code plugin: reshapes output for an ADHD reader. The repo root is
+    # the plugin (.claude-plugin/plugin.json), so it goes in `plugins` rather
+    # than `skills` -- that way its SessionStart hook comes along too. The repo
+    # doubles as a marketplace, but pinning the source here replaces
+    # `/plugin marketplace add ayghri/i-have-adhd`.
+    i-have-adhd = {
+      url = "github:ayghri/i-have-adhd";
       flake = false;
     };
 
@@ -34,7 +53,7 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nix-darwin, nixpkgs, home-manager, firefox-darwin, nur, nix-colors, impurity, serena, caveman, sops-nix, ... }@inputs:
+  outputs = { self, nix-darwin, nixpkgs, home-manager, firefox-darwin, nur, nix-colors, impurity, serena, caveman, cellar, claude-code-nix, i-have-adhd, sops-nix, ... }@inputs:
     let
 
       vars = {
@@ -79,7 +98,7 @@
             # `home-manager` config
             home-manager = {
               extraSpecialArgs = {
-                inherit nix-colors impurity vars sops-nix serena caveman;
+                inherit nix-colors impurity vars sops-nix serena caveman cellar claude-code-nix i-have-adhd;
                 pkgs-unstable = import inputs.nixpkgs-unstable { system = "aarch64-darwin"; config.allowUnfree = true; };
               };
               useGlobalPkgs = true;

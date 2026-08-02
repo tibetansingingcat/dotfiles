@@ -13,7 +13,6 @@
     casks = [
       "aerospace"
       "balenaetcher"
-      "bettermouse"
       "calibre"
       "claude"
       "google-drive"
@@ -77,6 +76,7 @@
       "neovim"
       "nvm"
       "okta-aws-cli"
+      "opencode"
       "openssl"
       "pipx"
       "pnpm"

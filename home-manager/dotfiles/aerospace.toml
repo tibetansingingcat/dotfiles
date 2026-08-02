@@ -84,23 +84,33 @@ gaps.outer.right =      0
 # Patterns are case-insensitive regex matched against monitor names; arrays are
 # fallback chains, first connected match wins. Externals are pinned by name
 # rather than the 'secondary' keyword, because 'secondary' resolves to whichever
-# monitor macOS doesn't mark as main -- at a hot desk the built-in is macOS-main,
-# so 'secondary' would grab the external and we could not steer 1-4 vs 5-8
-# independently. Permanent setup (2 externals + built-in):
-#   1-4 -> DELL U2725QE, 5-8 -> LG UltraFine, 9-0 -> built-in
-# Fallbacks keep 1-4/5-8 landing on any external present, else the built-in,
-# so a laptop-only session still works.
+# monitor macOS doesn't mark as main -- with the built-in as macOS-main (true
+# both at a hot desk and in the portable setup below), 'secondary' would grab
+# whatever external is attached and we could not steer the groups independently.
+#
+# One set of chains covers all three setups, because the only thing that varies
+# is which monitors are *connected*:
+#
+#   Desk (DELL + LG + built-in):  1-4 -> DELL,     5-8 -> LG,   9-0 -> built-in
+#   Portable (VX1655 + built-in): 1-5 -> built-in, 6-0 -> VX1655
+#   Laptop only:                  everything -> built-in
+#
+# The desk split is unchanged. The portable split falls out of it: the VX1655
+# sits last in the 6-8 chains (so the LG still wins at the desk) and first in
+# 9-0 (where nothing else competes), which lands 6-0 on the portable and leaves
+# 1-5 on the laptop. To swap the halves -- portable gets 1-5, laptop gets 6-0 --
+# move 'vx1655' to the front of 1-5 and drop it from 6-0.
 [workspace-to-monitor-force-assignment]
-1 = ['dell u2725qe', 'lg ultrafine', 'main']
-2 = ['dell u2725qe', 'lg ultrafine', 'main']
-3 = ['dell u2725qe', 'lg ultrafine', 'main']
-4 = ['dell u2725qe', 'lg ultrafine', 'main']
+1 = ['dell u2725qe', 'lg ultrafine', 'built-in']
+2 = ['dell u2725qe', 'lg ultrafine', 'built-in']
+3 = ['dell u2725qe', 'lg ultrafine', 'built-in']
+4 = ['dell u2725qe', 'lg ultrafine', 'built-in']
 5 = ['lg ultrafine', 'dell u2725qe', 'built-in']
-6 = ['lg ultrafine', 'dell u2725qe', 'built-in']
-7 = ['lg ultrafine', 'dell u2725qe', 'built-in']
-8 = ['lg ultrafine', 'dell u2725qe', 'built-in']
-9 = ['built-in', 'main']
-0 = ['built-in', 'main']
+6 = ['lg ultrafine', 'dell u2725qe', 'vx1655', 'built-in']
+7 = ['lg ultrafine', 'dell u2725qe', 'vx1655', 'built-in']
+8 = ['lg ultrafine', 'dell u2725qe', 'vx1655', 'built-in']
+9 = ['vx1655', 'built-in', 'main']
+0 = ['vx1655', 'built-in', 'main']
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
