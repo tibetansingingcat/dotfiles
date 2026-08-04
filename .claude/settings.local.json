@@ -188,7 +188,18 @@
       "Bash(grep -viE \"^\\\\s*$|stty\")",
       "Bash(zsh -ic 'sdk env 2>/dev/null; echo \"JAVA_HOME=$JAVA_HOME\"; which java; java -version')",
       "Bash(command -v jenv)",
-      "Bash(JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home zsh -c 'export SDKMAN_DIR=\"$HOME/.sdkman\"; echo \"before=[$JAVA_HOME]\"; source \"$SDKMAN_DIR/bin/sdkman-init.sh\"; echo \"after =[$JAVA_HOME]\"')"
+      "Bash(JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home zsh -c 'export SDKMAN_DIR=\"$HOME/.sdkman\"; echo \"before=[$JAVA_HOME]\"; source \"$SDKMAN_DIR/bin/sdkman-init.sh\"; echo \"after =[$JAVA_HOME]\"')",
+      "WebFetch(domain:mintlify.wiki)",
+      "Bash(gh repo *)",
+      "Bash(gh release *)",
+      "Bash(brew info *)",
+      "Bash(brew install *)",
+      "Bash(rtk --version)",
+      "Bash(rtk init *)",
+      "Bash(rtk read *)",
+      "Bash(rtk hook *)",
+      "Bash(rtk grep *)",
+      "Bash(rtk git *)"
     ],
     "deny": [],
     "ask": []

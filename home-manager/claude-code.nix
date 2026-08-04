@@ -104,6 +104,22 @@ in
     };
   };
 
+  # rtk (Rust Token Killer) is deliberately NOT configured here. It's a
+  # PreToolUse hook that rewrites Bash commands (`git status` -> `rtk git
+  # status`) so the agent reads compressed output. Wiring it from nix would mean
+  # setting programs.claude-code.settings, which turns ~/.claude/settings.json
+  # into a read-only store symlink -- and Claude Code writes that file at
+  # runtime (theme, voice, enabledPlugins, /config), same reason ~/.claude.json
+  # is left alone above. So the hook was installed imperatively, once:
+  #
+  #   rtk init -g --auto-patch
+  #
+  # That adds hooks.PreToolUse -> `rtk hook claude` to ~/.claude/settings.json
+  # (backup at settings.json.bak), writes ~/.claude/RTK.md, and points
+  # ~/.claude/CLAUDE.md at it with `@RTK.md`. `rtk init --show` reports status;
+  # `rtk init -g --uninstall` reverses it. The binary itself IS declarative --
+  # brews in darwin/homebrew.nix -- so only the ~/.claude wiring is manual, and
+  # it survives rebuilds precisely because nothing here manages it.
   home.packages = [
     # The cellar skill shells out to this binary, so it must be on PATH.
     cellar.packages.${system}.default

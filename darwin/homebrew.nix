@@ -83,6 +83,12 @@
       "poetry"
       "pkgconf"
       "pkl"
+      # CLI proxy that compresses command output before it reaches an agent's
+      # context. Wired into Claude Code as a PreToolUse hook -- see the rtk
+      # comment in home-manager/claude-code.nix. Brew rather than nix because
+      # it isn't in nixpkgs and ships releases weekly, so onActivation.upgrade
+      # keeps it current without hand-bumping a hash.
+      "rtk"
       "sad"
       "sql-language-server"
       "tailwindcss-language-server"
