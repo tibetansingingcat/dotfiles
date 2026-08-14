@@ -199,7 +199,10 @@
       "Bash(rtk read *)",
       "Bash(rtk hook *)",
       "Bash(rtk grep *)",
-      "Bash(rtk git *)"
+      "Bash(rtk git *)",
+      "Bash(rtk ls *)",
+      "Bash(rtk stat *)",
+      "Bash(ps -Ao pid,ppid,lstart,command)"
     ],
     "deny": [],
     "ask": []

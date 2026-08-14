@@ -76,6 +76,20 @@ in
 
     mcpServers = mcpServersAttrs;
 
+    # ~/.claude/CLAUDE.md -- the only instructions loaded in every session
+    # regardless of cwd, so this is where "always try Serena/cellar/Context7
+    # before grepping or unzipping a jar" has to live. Nothing else nudges tool
+    # choice: MCP servers and plugins being *installed* doesn't make them get
+    # reached for, and a project CLAUDE.md only helps inside that project.
+    #
+    # This takes over a file rtk previously owned (`rtk init -g --auto-patch`
+    # wrote `@RTK.md` into it), hence the `@RTK.md` on line 1 of the source
+    # file -- dropping it would silently unload the rtk command reference.
+    # RTK.md itself is still imperative and untouched. Consequence: CLAUDE.md is
+    # now a read-only store symlink, so re-running `rtk init --auto-patch` can no
+    # longer patch it; add future imports to claude-memory.md instead.
+    context = ./dotfiles/claude-memory.md;
+
     plugins = [
       # Cellar's repo root is also a Claude Code plugin (skills/cellar), pinned
       # here to the same flake input as the CLI above rather than installed via

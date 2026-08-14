@@ -23,6 +23,7 @@
     casks = [
       "1password"
       "dbeaver-community"
+      "zen"
     ];
     brews = [
       "letterboxd/tools/letterboxd-setup"

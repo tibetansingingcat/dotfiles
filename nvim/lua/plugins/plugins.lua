@@ -529,9 +529,20 @@ return {
     end,
   },
   -- Java handled by LazyVim extra (lazyvim.plugins.extras.lang.java / nvim-jdtls)
+  -- :JdtlsStop / :JdtlsStart / :JdtlsRestart / <leader>cJ come from
+  -- after/plugin/jdtls.lua -- stop the server before `mvn clean` so its
+  -- auto-build doesn't race maven. :MvnClean there does the whole bracket.
   {
     "mfussenegger/nvim-jdtls",
     opts = {
+      -- LazyVim defaults this to {}, which scans every main class in the workspace
+      -- on attach and resolves a classpath for each. jdtls ships m2e.core but not
+      -- org.eclipse.m2e.launching, so the classpath provider those launch configs
+      -- reference is unregistered and every module fails. nvim-jdtls print()s each
+      -- failure (jdtls/dap.lua), so a multi-module project buries the cmdline in
+      -- errors and a "Press ENTER" prompt on every java buffer. Disabling it leaves
+      -- nvim-dap to discover java configs lazily via the provider setup_dap registers.
+      dap_main = false,
       settings = {
         java = {
           compile = {

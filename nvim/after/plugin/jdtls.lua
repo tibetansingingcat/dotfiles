@@ -141,10 +141,29 @@ end
 
 local building = false
 
+-- The reactor root, not the nearest module. vim.fs.find stops at the first
+-- pom.xml going up, which in a multi-module repo is the module you happen to
+-- have open -- so `:MvnClean install` from a file in core/ would clean and
+-- build core alone, silently doing a fraction of what you asked for.
+--
+-- Climbing only through an *unbroken* chain of pom.xml-bearing parents keeps
+-- an unrelated pom further up the filesystem from hijacking the root, and
+-- stops naturally at the first ancestor that isn't part of the reactor.
 local function project_root()
   local dir = vim.fs.dirname(vim.api.nvim_buf_get_name(0))
   local pom = vim.fs.find("pom.xml", { upward = true, path = (dir ~= "" and dir) or vim.uv.cwd() })[1]
-  return pom and vim.fs.dirname(pom) or nil
+  if not pom then
+    return nil
+  end
+
+  local root = vim.fs.dirname(pom)
+  for parent in vim.fs.parents(root) do
+    if not vim.uv.fs_stat(parent .. "/pom.xml") then
+      break
+    end
+    root = parent
+  end
+  return root
 end
 
 local function show_output(lines)
@@ -156,6 +175,17 @@ local function show_output(lines)
   vim.cmd("botright split")
   vim.api.nvim_win_set_buf(0, buf)
   vim.bo[buf].modifiable = false
+end
+
+-- Maven spells profile activation four ways; any of them means the caller has
+-- an opinion and we should keep out of it.
+local function has_profile_arg(args)
+  for _, arg in ipairs(args) do
+    if arg:match("^%-P") or arg:match("^%-%-activate%-profiles") then
+      return true
+    end
+  end
+  return false
 end
 
 local function mvn_clean(args)
@@ -176,6 +206,15 @@ local function mvn_clean(args)
   local cmd = vim.uv.fs_stat(mvnw) and { mvnw } or { "mvn" }
   table.insert(cmd, "clean")
   vim.list_extend(cmd, args)
+
+  -- Default to -Pcli, which redirects <directory> to target/build-cli (see
+  -- supermodel-parent). That keeps maven off target/, which is jdtls's own
+  -- output folder -- so a clean no longer empties target/classes and leave the
+  -- language server resolving nothing on restart. Explicit -P wins, since
+  -- clearing target/ is occasionally exactly what you want.
+  if not has_profile_arg(args) then
+    table.insert(cmd, "-Pcli")
+  end
 
   building = true
   stop()
@@ -206,10 +245,11 @@ vim.api.nvim_create_user_command("JdtlsRestart", restart, { desc = "Restart jdtl
 vim.api.nvim_create_user_command("JdtlsToggle", toggle, { desc = "Toggle jdtls" })
 -- stylua: ignore end
 
--- Extra args are appended, so `:MvnClean install -DskipTests` runs
--- `mvn clean install -DskipTests`.
+-- Extra args are appended and -Pcli is added unless you name a profile, so
+-- `:MvnClean install -DskipTests` runs `mvn clean install -DskipTests -Pcli`.
+-- Pass a profile explicitly (`:MvnClean -P!cli`) to build into target/ instead.
 vim.api.nvim_create_user_command("MvnClean", function(opts)
   mvn_clean(opts.fargs)
-end, { nargs = "*", desc = "Stop jdtls, run mvn clean, restart jdtls" })
+end, { nargs = "*", desc = "Stop jdtls, run mvn clean -Pcli, restart jdtls" })
 
 vim.keymap.set("n", "<leader>cJ", toggle, { desc = "Toggle jdtls (stop for mvn clean)" })

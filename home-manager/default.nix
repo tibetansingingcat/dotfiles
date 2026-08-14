@@ -43,6 +43,12 @@ in
     actionlint
     postgresql_17 # psql client (also used by vim-dadbod)
 
+    # Python + libraries used by scripts (e.g. Anki deck generation)
+    (python3.withPackages (ps: with ps; [
+      genanki
+      pyyaml
+    ]))
+
     # Useful nix related tools
     cachix # adding/managing alternative binary caches hosted by Cachix
     niv # easy dependency management for nix projects

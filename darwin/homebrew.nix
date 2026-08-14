@@ -12,6 +12,7 @@
     # hosts/<name>/default.nix and roles/personal/darwin.nix.
     casks = [
       "aerospace"
+      "anki"
       "balenaetcher"
       "calibre"
       "claude"
