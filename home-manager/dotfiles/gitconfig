@@ -75,3 +75,5 @@
 	required = true
 [pull]
 	rebase = true
+[rebase]
+  updateRefs = true

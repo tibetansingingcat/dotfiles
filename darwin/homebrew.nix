@@ -30,6 +30,7 @@
       "raycast"
       "slack"
       "signal"
+      "tidal"
       "visual-studio-code"
     ];
     taps = [

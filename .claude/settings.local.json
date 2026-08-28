@@ -202,7 +202,8 @@
       "Bash(rtk git *)",
       "Bash(rtk ls *)",
       "Bash(rtk stat *)",
-      "Bash(ps -Ao pid,ppid,lstart,command)"
+      "Bash(ps -Ao pid,ppid,lstart,command)",
+      "Bash(awk '/!ENTRY .* 4 /{n=NR} END{}' .metadata/.log)"
     ],
     "deny": [],
     "ask": []

@@ -68,6 +68,15 @@ local function stop()
     -- is exit_timeout = false, i.e. wait forever, so pass the timeout
     -- explicitly.
     client:stop(2000)
+
+    -- Clear the dying client's diagnostics. jdtls uses *push* diagnostics
+    -- (textDocument/publishDiagnostics), and nvim only cleans up *pull*
+    -- namespaces on LspDetach (`clear()` in vim/lsp/diagnostic.lua iterates
+    -- client_pull_namespaces). So a stopped client's diagnostics stay in every
+    -- buffer forever under nvim.lsp.jdtls.<id>, while the restarted server
+    -- publishes under a new namespace -- each restart stacking another frozen
+    -- snapshot, including warnings produced under settings since changed.
+    vim.diagnostic.reset(vim.lsp.diagnostic.get_namespace(client.id))
   end
 
   vim.notify(("jdtls: stopping %d client(s)"):format(#running), vim.log.levels.INFO)

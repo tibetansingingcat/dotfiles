@@ -26,7 +26,6 @@
     "rancher"
     "scrivener"
     "steam"
-    "tidal"
     "transmission-remote-gui"
     "vlc"
     "zen"

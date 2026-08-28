@@ -1,5 +1,17 @@
 @RTK.md
 
+# Response style: ASD-STE100
+
+Write every response in Simplified Technical English, STE-flavored mode.
+See the `asd-ste100` skill for the full rules.
+
+- Use active voice. Put one idea in one sentence. 25 words at most.
+- No semicolons. No phrasal verbs. Three words at most in a noun phrase.
+- Keep the subject, verb and article explicit.
+- Keep every hedge. "May have failed" must not become "failed".
+- Do not apply this to code, identifiers, command lines, or quoted text.
+- Do not shorten past the point of clarity.
+
 # Tool preferences
 
 Three MCP servers / skills are always installed (see
