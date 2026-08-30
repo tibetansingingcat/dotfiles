@@ -1,6 +1,7 @@
 # This file defines which keys can decrypt which secrets
 keys:
   - &wrose age1v5qutegvc5qcxhfkqd0kw02lt9ceva6nzljvf053mhypyehmr9rqq20nl6
+  - &letterboxd age14rgxqa8vecl9x3d6a7vs7n8aft62utudrp30rqvusrl3kk557p5szfaepn
 
 creation_rules:
   # Default rule - all secrets can be decrypted by wrose's key
@@ -8,3 +9,4 @@ creation_rules:
     key_groups:
       - age:
           - *wrose
+          - *letterboxd

@@ -19,15 +19,11 @@
     delta
     mono
     pam-reattach
+    ssh-to-age
     zstd
   ];
   nix.enable = false;
-  #nix.extraOptions = ''
-  #  auto-optimise-store = true
-  #  experimental-features = nix-command flakes
-  #'' + lib.optionalString (pkgs.system == "aarch64-darwin") ''
-  #  extra-platforms = x86_64-darwin aarch64-darwin
-  #'';
+  #
   # Keyboard
   system.keyboard.enableKeyMapping = true;
   # system.nvram.variables = {
@@ -81,6 +77,12 @@
     NSGlobalDomain.KeyRepeat = 1;
     # universalaccess.reduceMotion = true; # Requires additional permissions on newer macOS
     WindowManager.StandardHideDesktopIcons = true;
+    # Tahoe (macOS 26) Liquid Glass tweaks; unknown keys are inert on older macOS
+    CustomUserPreferences.NSGlobalDomain = {
+      NSSplitViewItemSidebarDefaultsToFloatingAppearance = false;
+      NSConvolutionOverride1 = 16.0;
+      NSMenuEnableActionImages = false;
+    };
   };
   # backwards compat; don't change
   system.stateVersion = 5;

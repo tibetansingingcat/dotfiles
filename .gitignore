@@ -1,0 +1,3 @@
+# age private keys must never be committed
+letterboxd-key.txt
+*-key.txt

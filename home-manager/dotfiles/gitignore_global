@@ -1,0 +1,6 @@
+.serena/
+.DS_Store
+.envrc
+
+# Eclipse/jdtls launch configs — rewritten locally with machine-specific JRE names
+*.launch

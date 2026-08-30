@@ -4,6 +4,7 @@ let
 in
 {
   imports = [
+    ./claude-code.nix
     ./kitty.nix
     ./tmux.nix
     ./zsh.nix
@@ -13,7 +14,7 @@ in
   ];
   colorScheme = nix-colors.colorSchemes."catppuccin-mocha";
   # Don't change this when you change package input. Leave it alone.
-  home.stateVersion = "24.11";
+  home.stateVersion = "26.05";
   #home.enableNixpkgsReleaseCheck = false;
   # specify my home-manager configs
   home.packages = with pkgs; [
@@ -33,8 +34,6 @@ in
     idris2
     jq
     lua
-    nodePackages.typescript
-    nodePackages.pnpm
     nodejs_22
     purescript
     lazygit
@@ -42,15 +41,18 @@ in
     reattach-to-user-namespace
     rustup
     actionlint
+    postgresql_17 # psql client (also used by vim-dadbod)
+
+    # Python + libraries used by scripts (e.g. Anki deck generation)
+    (python3.withPackages (ps: with ps; [
+      genanki
+      pyyaml
+    ]))
 
     # Useful nix related tools
     cachix # adding/managing alternative binary caches hosted by Cachix
-    # comma # run software from without installing it
     niv # easy dependency management for nix projects
     nixd # nix language server for LSP support
-    nodePackages.node2nix
-    nodePackages.eslint
-    #nodePackages.next
 
     # Secrets management
     age
@@ -70,6 +72,7 @@ in
   programs.neovim = {
     enable = true;
     #package = pkgs.neovim-nightly;
+    sideloadInitLua = true;
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
@@ -82,24 +85,34 @@ in
     ];
   };
 
+  # Make QSpace Pro the handler for opening folders (Finder itself can't be
+  # replaced; this covers folder-opens from other apps). Skips if not installed.
+  home.activation.setDefaultFileManager = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    if [ -d "/Applications/QSpace Pro.app" ]; then
+      qspaceId=$(/usr/bin/osascript -e 'id of app "QSpace Pro"' 2>/dev/null || true)
+      if [ -n "$qspaceId" ]; then
+        run ${pkgs.duti}/bin/duti -s "$qspaceId" public.folder viewer || true
+      fi
+    fi
+  '';
+
+  # Print an unmistakable banner at the very end of activation. Ordered after
+  # 'sops-nix', which is the last built-in home-manager activation entry, so
+  # this is the final thing a successful `darwin-rebuild switch` prints.
+  # Suppressed on dry-run activations so it never reports a false success.
+  home.activation.switchSucceeded = lib.hm.dag.entryAfter [ "sops-nix" ] ''
+    if [[ ! -v DRY_RUN ]]; then
+      echo ""
+      echo "  ✅  rebuild + switch complete — your configuration is now live."
+      echo ""
+    fi
+  '';
+
   programs.ssh = {
     enable = true;
     # Explicitly disable default config to avoid future warnings
     enableDefaultConfig = false;
-    matchBlocks = {
-      # Apply forwardAgent globally
-      "*" = {
-        forwardAgent = true;
-      };
-      keychain = {
-        host = "*";
-        extraOptions = {
-          UseKeychain = "yes";
-          AddKeysToAgent = "yes";
-          IgnoreUnknown = "UseKeychain";
-        };
-      };
-    };
+    # matchBlocks (forwardAgent, keychain) live in roles/personal/home.nix
   };
 
   # Direnv, load and unload environment variables depending on the current directory.
@@ -131,7 +144,12 @@ in
       recursive = true;
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/nvim";
     };
-    "karabiner/karabiner.json".source = ./dotfiles/karabiner.json;
+    # Writable out-of-store symlink: Karabiner-Elements needs to write back to
+    # this file to persist per-device settings (e.g. enabling "Modify events"
+    # for a newly connected keyboard). A plain store symlink is read-only, so
+    # those GUI toggles silently fail to save. Edits now land in the repo file.
+    "karabiner/karabiner.json".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/home-manager/dotfiles/karabiner.json";
   };
   programs.starship.enable = true;
   programs.starship.enableZshIntegration = true;
@@ -141,14 +159,17 @@ in
     settings.font.size = 16;
   };
   home.file.".inputrc".source = ./dotfiles/inputrc;
-  home.file.".gitconfig".source = ./dotfiles/gitconfig;
-  home.file."sxm/.gitconfig".source = ./dotfiles/sxm-gitconfig;
+  # Referenced by core.excludesfile in dotfiles/gitconfig
+  home.file.".gitignore_global".source = ./dotfiles/gitignore_global;
+  home.file.".aerospace.toml".source = ./dotfiles/aerospace.toml;
+  # .gitconfig and sxm/.gitconfig are host-specific — see roles/personal/home.nix
   home.file."Library/Application Support/lazygit/config.yml".source = ./dotfiles/lazygit;
 
   # Secrets management with sops-nix
   sops = {
-    # Path to the age key for decryption (derived from SSH key)
-    age.sshKeyPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
+    # Plaintext age key — the SSH key is passphrase-protected and would hang
+    # activation waiting for a prompt that darwin-rebuild swallows
+    age.keyFile = "${config.home.homeDirectory}/Library/Application Support/sops/age/keys.txt";
 
     # Default secrets file
     defaultSopsFile = ../secrets/secrets.yaml;

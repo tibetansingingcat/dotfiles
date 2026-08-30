@@ -67,6 +67,9 @@ in
       set -g status-right-length 50
       set -g status-left-length 20
       setw -g mode-keys vi
+      set -g set-clipboard on
+      bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel pbcopy
+      bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel pbcopy
     
       setw -g window-status-current-format ' #I#[fg=colour250]:#[fg=colour255]#W#[fg=colour50]#F '
       setw -g window-status-format ' #I#[fg=colour237]:#[fg=colour250]#W#[fg=colour244]#F '

@@ -8,59 +8,34 @@
   homebrew = {
     enable = true;
     global.brewfile = true;
+    # Casks common to every machine. Host-specific casks live in
+    # hosts/<name>/default.nix and roles/personal/darwin.nix.
     casks = [
       "aerospace"
-      "aldente"
-      #"audacity"
-      #"anki"
-      "autodesk-fusion"
+      "anki"
       "balenaetcher"
-      "bartender"
-      "blender"
-      "beeper"
       "calibre"
-      "crossover"
-      "discord"
-      "dropbox"
-      "element"
-      "godot"
-      "google-chrome"
+      "claude"
       "google-drive"
       "handbrake-app"
       "insomnia"
       "jetbrains-toolbox"
       "karabiner-elements"
       "keka"
-      "linear-linear"
       "nikitabobko/tap/aerospace"
       "nheko"
       "notion"
-      "obs"
-      "obsidian"
-      "plex"
-      "proton-drive"
-      "proton-mail"
-      "proton-mail-bridge"
       "proton-pass"
-      "protonvpn"
+      "qspace-pro"
       "raycast"
       "slack"
-      "spotify"
       "signal"
-      "steam"
-      "telegram"
       "tidal"
-      "transmission-remote-gui"
-      "unity-hub"
-      #"utm"
       "visual-studio-code"
-      "vlc"
-      "warp"
-      "whisky"
-      "zoom"
     ];
     taps = [
       "nikitabobko/tap"
+      "rtk-ai/tap"
     ];
     brews = [
       "autoconf"
@@ -95,6 +70,7 @@
       "localstack"
       "lsof"
       "luajit"
+      "mas"
       "luv"
       "lzlib"
       "imagemagick"
@@ -102,14 +78,21 @@
       "minikube"
       "neovim"
       "nvm"
-      "netatalk"
       "okta-aws-cli"
+      "opencode"
       "openssl"
       "pipx"
       "pnpm"
       "poetry"
       "pkgconf"
       "pkl"
+      # CLI proxy that compresses command output before it reaches an agent's
+      # context. Wired into Claude Code as a PreToolUse hook -- see the rtk
+      # comment in home-manager/claude-code.nix. Brew rather than nix because
+      # it isn't in nixpkgs and ships releases weekly, so onActivation.upgrade
+      # keeps it current without hand-bumping a hash. Tap-qualified because
+      # homebrew/core now ships an unrelated formula also named `rtk`.
+      "rtk-ai/tap/rtk"
       "sad"
       "sql-language-server"
       "tailwindcss-language-server"
@@ -124,7 +107,18 @@
       "yt-dlp"
     ];
     masApps = {
-      #"Bitwarden" = 1352778147;
+      "Dato" = 1470584107;
+      "Todoist" = 585829637;
+      # Safari extensions
+      "Noir" = 1592917505;
+      "Vimari" = 1480933944;
+      "Kagi for Safari" = 1622835804;
+      "Ghostery Privacy Ad Blocker" = 6504861501;
+      "AdGuard Mini" = 1440147259;
+      "Tampermonkey Classic" = 1482490089;
+      "Octotree" = 1457450145;
+      "Command X" = 6448461551;
+      "10ten Japanese Reader" = 1573540634;
     };
     onActivation.cleanup = "zap";
     onActivation.autoUpdate = true;
