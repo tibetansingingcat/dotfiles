@@ -7,6 +7,8 @@
   homebrew = {
     masApps = {
       "WireGuard" = 1451685025;
+      # Safari extensions
+      "1Password for Safari" = 1569813296;
     };
     taps = [
       {
