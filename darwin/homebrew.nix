@@ -35,6 +35,7 @@
     ];
     taps = [
       "nikitabobko/tap"
+      "rtk-ai/tap"
     ];
     brews = [
       "autoconf"
@@ -89,8 +90,9 @@
       # context. Wired into Claude Code as a PreToolUse hook -- see the rtk
       # comment in home-manager/claude-code.nix. Brew rather than nix because
       # it isn't in nixpkgs and ships releases weekly, so onActivation.upgrade
-      # keeps it current without hand-bumping a hash.
-      "rtk"
+      # keeps it current without hand-bumping a hash. Tap-qualified because
+      # homebrew/core now ships an unrelated formula also named `rtk`.
+      "rtk-ai/tap/rtk"
       "sad"
       "sql-language-server"
       "tailwindcss-language-server"
