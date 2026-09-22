@@ -587,4 +587,5 @@ return {
       -- Leave empty for defaults; Mason's binary is auto-detected
     },
   },
+  { "tpope/vim-abolish", event = "VeryLazy" },
 }

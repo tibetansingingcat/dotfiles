@@ -1,0 +1,17 @@
+{
+  "name": "jsp-linker-server",
+  "version": "0.4.0",
+  "private": true,
+  "description": "LSP server hosting the Letterboxd JSP-Java Linker VSCode extension under Neovim.",
+  "main": "server.js",
+  "license": "MIT",
+  "dependencies": {
+    "vscode": "file:./vscode-shim",
+    "vscode-languageserver": "^9.0.1",
+    "vscode-languageserver-textdocument": "^1.0.12"
+  },
+  "scripts": {
+    "check": "node check-shim.js",
+    "test": "node check-shim.js && node test-e2e.js"
+  }
+}
