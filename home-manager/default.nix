@@ -188,6 +188,7 @@ in
       "database/password" = { };
       "protonmail_bridge_password" = { };
       "fastmail_app_password" = { };
+      "claude_oauth_token" = { };
     };
   };
 }

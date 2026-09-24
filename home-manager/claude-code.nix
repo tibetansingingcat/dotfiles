@@ -43,6 +43,15 @@ let
     exec ${pkgs.github-mcp-server}/bin/github-mcp-server stdio "$@"
   '';
 
+  # Same server, pointed at the GitHub Enterprise instance instead of
+  # github.com. `gh` already holds a separate keyring token for this host
+  # (`gh auth login --hostname ghe.siriusxm.com`); `--gh-host` makes
+  # github-mcp-server talk to it instead of api.github.com.
+  githubEnterpriseMcpServer = pkgs.writeShellScript "github-mcp-server-ghe-auth" ''
+    export GITHUB_PERSONAL_ACCESS_TOKEN="$(${pkgs.gh}/bin/gh auth token --hostname ghe.siriusxm.com)"
+    exec ${pkgs.github-mcp-server}/bin/github-mcp-server stdio --gh-host ghe.siriusxm.com "$@"
+  '';
+
   mcpServersAttrs = {
     # Up-to-date library docs. Works unauthenticated; an API key
     # (https://context7.com) can be added later via a headers attr for
@@ -57,6 +66,14 @@ let
     github = {
       type = "stdio";
       command = "${githubMcpServer}";
+    };
+
+    # SiriusXM's self-hosted GitHub Enterprise instance. Same stdio pattern as
+    # `github` above, just a different host/token -- see the SSE-vs-stdio
+    # comment on `githubMcpServer` for why this doesn't run over HTTP.
+    github-enterprise = {
+      type = "stdio";
+      command = "${githubEnterpriseMcpServer}";
     };
 
     # Semantic code retrieval/editing via language servers.

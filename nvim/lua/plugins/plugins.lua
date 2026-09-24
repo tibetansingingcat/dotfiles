@@ -275,7 +275,7 @@ return {
         showImplicitConversionsAndClasses = false,
         showInferredType = true,
         superMethodLensesEnabled = true,
-        --serverVersion = "latest.snapshot",
+        serverVersion = "2.0.0-M19",
         testUserInterface = "Test Explorer",
       }
       metals_config.init_options = {
