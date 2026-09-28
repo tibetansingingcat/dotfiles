@@ -88,11 +88,12 @@ gaps.outer.right =      0
 # both at a hot desk and in the portable setup below), 'secondary' would grab
 # whatever external is attached and we could not steer the groups independently.
 #
-# One set of chains covers all three setups, because the only thing that varies
+# One set of chains covers all four setups, because the only thing that varies
 # is which monitors are *connected*:
 #
 #   Desk (DELL + LG + built-in):  1-4 -> DELL,     5-8 -> LG,   9-0 -> built-in
 #   Portable (VX1655 + built-in): 1-5 -> built-in, 6-0 -> VX1655
+#   LG UltraGear + built-in:      1-8 -> UltraGear, 9-0 -> built-in
 #   Laptop only:                  everything -> built-in
 #
 # The desk split is unchanged. The portable split falls out of it: the VX1655
@@ -101,14 +102,14 @@ gaps.outer.right =      0
 # 1-5 on the laptop. To swap the halves -- portable gets 1-5, laptop gets 6-0 --
 # move 'vx1655' to the front of 1-5 and drop it from 6-0.
 [workspace-to-monitor-force-assignment]
-1 = ['dell u2725qe', 'lg ultrafine', 'built-in']
-2 = ['dell u2725qe', 'lg ultrafine', 'built-in']
-3 = ['dell u2725qe', 'lg ultrafine', 'built-in']
-4 = ['dell u2725qe', 'lg ultrafine', 'built-in']
-5 = ['lg ultrafine', 'dell u2725qe', 'built-in']
-6 = ['lg ultrafine', 'dell u2725qe', 'vx1655', 'built-in']
-7 = ['lg ultrafine', 'dell u2725qe', 'vx1655', 'built-in']
-8 = ['lg ultrafine', 'dell u2725qe', 'vx1655', 'built-in']
+1 = ['dell u2725qe', 'lg ultrafine', 'lg ultragear', 'built-in']
+2 = ['dell u2725qe', 'lg ultrafine', 'lg ultragear', 'built-in']
+3 = ['dell u2725qe', 'lg ultrafine', 'lg ultragear', 'built-in']
+4 = ['dell u2725qe', 'lg ultrafine', 'lg ultragear', 'built-in']
+5 = ['lg ultrafine', 'dell u2725qe', 'lg ultragear', 'built-in']
+6 = ['lg ultrafine', 'dell u2725qe', 'vx1655', 'lg ultragear', 'built-in']
+7 = ['lg ultrafine', 'dell u2725qe', 'vx1655', 'lg ultragear', 'built-in']
+8 = ['lg ultrafine', 'dell u2725qe', 'vx1655', 'lg ultragear', 'built-in']
 9 = ['vx1655', 'built-in', 'main']
 0 = ['vx1655', 'built-in', 'main']
 

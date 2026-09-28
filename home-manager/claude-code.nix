@@ -46,10 +46,11 @@ let
   # Same server, pointed at the GitHub Enterprise instance instead of
   # github.com. `gh` already holds a separate keyring token for this host
   # (`gh auth login --hostname ghe.siriusxm.com`); `--gh-host` makes
-  # github-mcp-server talk to it instead of api.github.com.
+  # github-mcp-server talk to it instead of api.github.com. It needs the
+  # scheme: a bare hostname dies with "host must have a scheme (http or https)".
   githubEnterpriseMcpServer = pkgs.writeShellScript "github-mcp-server-ghe-auth" ''
     export GITHUB_PERSONAL_ACCESS_TOKEN="$(${pkgs.gh}/bin/gh auth token --hostname ghe.siriusxm.com)"
-    exec ${pkgs.github-mcp-server}/bin/github-mcp-server stdio --gh-host ghe.siriusxm.com "$@"
+    exec ${pkgs.github-mcp-server}/bin/github-mcp-server stdio --gh-host https://ghe.siriusxm.com "$@"
   '';
 
   mcpServersAttrs = {

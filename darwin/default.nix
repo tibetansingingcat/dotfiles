@@ -17,6 +17,7 @@
   # nix.package = pkgs.nixUnstable;
   environment.systemPackages = with pkgs; [
     delta
+    difftastic
     mono
     pam-reattach
     ssh-to-age
