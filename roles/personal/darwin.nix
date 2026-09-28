@@ -11,6 +11,7 @@
     "godot"
     "linear"
     "megasync"
+    "moonlight"
     "obs"
     "obsidian"
     "plex"
