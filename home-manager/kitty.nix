@@ -1,7 +1,17 @@
 { pkgs, ... }: {
   programs.kitty = {
     enable = true;
-    themeFile = "Catppuccin-Mocha";
+    # The one place to set the theme. Names are file names in kitty-themes
+    # (`ls $(nix eval --raw nixpkgs#kitty-themes)/share/kitty-themes/themes`).
+    # Follows the macOS appearance. tmux uses ANSI colours, and nvim's
+    # colors/kitty.lua reads these files, so both follow.
+    autoThemeFiles = {
+      light = "Dayfox";
+      dark = "Nightfox";
+      # light = "Catppuccin-Latte";
+      # dark = "Catppuccin-Mocha";
+      noPreference = "Nightfox";
+    };
     font = {
       # package = pkgs.nerdfonts.firacode;
       name = "FiraCode Nerd Font Mono";

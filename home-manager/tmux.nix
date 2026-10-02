@@ -8,7 +8,6 @@ in
     keyMode = "vi";
     plugins = with pkgs; [
       tmuxPlugins.better-mouse-mode
-      tmuxPlugins.catppuccin
       tmuxPlugins.sensible
       tmuxPlugins.vim-tmux-navigator
     ];
@@ -57,13 +56,12 @@ in
       bind-key -T copy-mode-vi 'v' send -X begin-selection
       # bind-key -T copy-mode-vi 'y' send -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
     
-      set -g @catppuccin_flavour 'macchiato' # or frappe, macchiato, mocha
-    
       set -g status-position bottom
-      set -g status-bg colour234
-      set -g status-fg colour137
+      # ANSI colours only, so the bar follows kitty's light/dark theme.
+      # colourNNN are fixed palette entries and do not change with the theme.
+      set -g status-style bg=default,fg=default
       set -g status-left ""
-      set -g status-right '#[fg=colour233,bg=colour241,bold] %d/%m #[fg=colour233,bg=colour245,bold] %H:%M:%S '
+      set -g status-right '#[fg=brightblack] %d/%m #[fg=default,bold] %H:%M:%S '
       set -g status-right-length 50
       set -g status-left-length 20
       setw -g mode-keys vi
@@ -71,8 +69,8 @@ in
       bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel pbcopy
       bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel pbcopy
     
-      setw -g window-status-current-format ' #I#[fg=colour250]:#[fg=colour255]#W#[fg=colour50]#F '
-      setw -g window-status-format ' #I#[fg=colour237]:#[fg=colour250]#W#[fg=colour244]#F '
+      setw -g window-status-current-format '#[fg=blue,bold] #I:#W#F '
+      setw -g window-status-format '#[fg=brightblack] #I:#W#F '
     '';
   };
 }

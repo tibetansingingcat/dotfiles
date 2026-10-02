@@ -1,4 +1,11 @@
 return {
+  -- colors/kitty.lua takes its palette from kitty's auto theme files and
+  -- picks light or dark from 'background'. Use the name, not a function:
+  -- LazyVim's default calls tokyonight.load(), which forces background=dark and
+  -- disables terminal light/dark detection.
+  { "LazyVim/LazyVim", opts = { colorscheme = "kitty" } },
+  { "nvim-mini/mini.base16", lazy = false, priority = 1000 },
+  { "EdenEast/nightfox.nvim", lazy = false, priority = 1000 },
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
