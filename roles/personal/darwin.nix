@@ -11,7 +11,6 @@
     "discord"
     "dropbox"
     "godot"
-    "google-chrome"
     "linear"
     "megasync"
     "obs"

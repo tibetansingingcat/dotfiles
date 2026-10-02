@@ -16,6 +16,7 @@
       "balenaetcher"
       "calibre"
       "claude"
+      "google-chrome"
       "google-drive"
       "handbrake-app"
       "insomnia"
