@@ -29,6 +29,7 @@
     ];
     brews = [
       "letterboxd/tools/letterboxd-setup"
+      "1password-cli"
       "maven"
     ];
   };
