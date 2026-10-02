@@ -3,10 +3,8 @@
 { ... }: {
   homebrew.casks = [
     "aldente"
-    "autodesk-fusion"
     "bartender"
     "blender"
-    "beeper"
     "crossover"
     "discord"
     "dropbox"
@@ -15,7 +13,6 @@
     "megasync"
     "obs"
     "obsidian"
-    "openemu"
     "plex"
     "plexamp"
     "proton-drive"

@@ -118,8 +118,6 @@
       "AdGuard Mini" = 1440147259;
       "Tampermonkey Classic" = 1482490089;
       "Octotree" = 1457450145;
-      "Command X" = 6448461551;
-      "10ten Japanese Reader" = 1573540634;
     };
     onActivation.cleanup = "zap";
     onActivation.autoUpdate = true;
