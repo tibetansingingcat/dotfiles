@@ -24,12 +24,12 @@
     # uninstall them, so install the SDKMAN equivalents first.
     casks = [
       "1password"
+      "1password-cli"
       "dbeaver-community"
       "zen"
     ];
     brews = [
       "letterboxd/tools/letterboxd-setup"
-      "1password-cli"
       "maven"
     ];
   };
