@@ -31,6 +31,7 @@
       "raycast"
       "slack"
       "signal"
+      "tailscale-app"
       "tidal"
       "visual-studio-code"
     ];
