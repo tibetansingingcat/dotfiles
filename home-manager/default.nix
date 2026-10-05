@@ -1,7 +1,4 @@
 { config, pkgs, lib, vars, nix-colors, sops-nix, pkgs-unstable, ... }:
-let
-  yabai = "${pkgs.yabai}/bin/yabai";
-in
 {
   imports = [
     ./claude-code.nix

@@ -33,6 +33,8 @@ require("lazy").setup({
   --  local lspconfig = require('lspconfig')
   --  lspconfig.gdscript.setup({})
   --end,
+  -- No plugin needs luarocks; this stops the hererocks/luarocks health errors.
+  rocks = { enabled = false },
   install = { colorscheme = { "tokyonight", "habamax" } },
   checker = { enabled = true }, -- automatically check for plugin updates
   performance = {

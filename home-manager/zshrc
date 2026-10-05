@@ -135,7 +135,7 @@ if command tmux -V 2>&1 >/dev/null; then
   # This Environment variable is checked in order
   # to avoid nesting. Because when tmux starts a new
   # shell in it, it will try to launch tmux again!
-  if [ -z "$TMUX" ] && [ "$TERM_PROGRAM" = "kitty" ]; then
+  if [ -z "$TMUX" ] && [ "$TERM_PROGRAM" = "kitty" ] && [ -t 0 ] && [ -t 1 ]; then
     tmux
   fi
 fi

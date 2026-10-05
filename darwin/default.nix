@@ -30,10 +30,6 @@
   # system.nvram.variables = {
   #   "boot-args" = "-arm64e_preview_abi";
   # };
-  environment.etc."sudoers.d/yabai".text = ''
-    ${vars.user} ALL = (root) NOPASSWD: ${config.services.yabai.package}/bin/yabai --load-sa
-  '';
-
   # Add ability to used TouchID for sudo authentication
   security.pam = {
     # Renamed in nix-darwin 25.11

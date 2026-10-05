@@ -80,7 +80,6 @@
       "imagemagick"
       "mpfr"
       "minikube"
-      "neovim"
       "nvm"
       "okta-aws-cli"
       "opencode"

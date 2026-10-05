@@ -23,7 +23,7 @@
     "rancher"
     "scrivener"
     "steam"
-    "transmission-remote-gui"
+    #"transmission-remote-gui" # this is broken
     "vlc"
     "zen"
     "zoom"

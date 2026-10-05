@@ -24,6 +24,10 @@
     # Claude Code plugin at the repo root.
     cellar.url = "github:VirtusLab/cellar";
 
+    # Hermes Agent CLI, via the flake's home-manager module. Not `follows`-ing
+    # nixpkgs: its uv2nix Python lock is built against nixos-unstable.
+    hermes-agent.url = "github:NousResearch/hermes-agent";
+
     # Claude Code skills (not a flake, just the repo source)
     caveman = {
       url = "github:JuliusBrussee/caveman";
@@ -53,7 +57,7 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nix-darwin, nixpkgs, home-manager, firefox-darwin, nur, nix-colors, impurity, serena, caveman, cellar, claude-code-nix, i-have-adhd, sops-nix, ... }@inputs:
+  outputs = { self, nix-darwin, nixpkgs, home-manager, firefox-darwin, nur, nix-colors, impurity, serena, caveman, cellar, claude-code-nix, i-have-adhd, hermes-agent, sops-nix, ... }@inputs:
     let
 
       vars = {
@@ -98,7 +102,7 @@
             # `home-manager` config
             home-manager = {
               extraSpecialArgs = {
-                inherit nix-colors impurity vars sops-nix serena caveman cellar claude-code-nix i-have-adhd;
+                inherit nix-colors impurity vars sops-nix serena caveman cellar claude-code-nix i-have-adhd hermes-agent;
                 pkgs-unstable = import inputs.nixpkgs-unstable { system = "aarch64-darwin"; config.allowUnfree = true; };
               };
               useGlobalPkgs = true;
