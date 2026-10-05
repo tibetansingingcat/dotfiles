@@ -49,6 +49,7 @@
       [ -r "${config.sops.secrets.jira_username.path}" ] && export JIRA_USERNAME="$(cat ${config.sops.secrets.jira_username.path})"
       [ -r "${config.sops.secrets.confluence_personal_token.path}" ] && export CONFLUENCE_PERSONAL_TOKEN="$(cat ${config.sops.secrets.confluence_personal_token.path})"
       [ -r "${config.sops.secrets.claude_oauth_token.path}" ] && export CLAUDE_CODE_OAUTH_TOKEN="$(cat ${config.sops.secrets.claude_oauth_token.path})"
+      [ -r "${config.sops.secrets.litellm_api_key.path}" ] && export LITELLM_API_KEY="$(cat ${config.sops.secrets.litellm_api_key.path})"
 
       export PATH="$HOME/scripts:$HOME/bin:/usr/sbin:/opt/local/bin:/usr/local/bin:/Users/wrose/Library/Application Support/Coursier/bin:/bin:/usr/bin:/run/current-system/sw/bin:$HOME/.sxm/bin"
 

@@ -189,6 +189,7 @@ in
       "protonmail_bridge_password" = { };
       "fastmail_app_password" = { };
       "claude_oauth_token" = { };
+      "litellm_api_key" = { };
     };
   };
 }
