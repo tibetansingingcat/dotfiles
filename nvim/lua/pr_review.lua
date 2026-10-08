@@ -11,6 +11,7 @@ local pr ---@type {repo: string, number: string}? PR under review
 local comments = {} -- review comments keyed by path
 local at_row = {} -- row -> comments shown under it, for the current file
 local show = true
+local jumps = {} -- {file_idx, cursor} stack for <C-o> inside the diff view
 
 local function difft()
   return require("difftastic-nvim")
@@ -357,7 +358,6 @@ function M.hover()
   end)
 end
 
-local jumps = {} -- {file_idx, cursor} stack for <C-o> inside the diff view
 
 -- Show file idx in the diff view with the cursor on new-side line `line` (0-based).
 local function goto_diff(idx, line)
