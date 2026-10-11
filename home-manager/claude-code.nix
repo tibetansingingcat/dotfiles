@@ -133,6 +133,10 @@ in
       # Terse output style to cut token usage. The repo also ships
       # caveman-commit, caveman-review, caveman-compress, etc.
       caveman = "${caveman}/skills/caveman";
+
+      # Tempo worklogs via the Tempo REST API (Activity + Account attributes,
+      # Pacific dates). Local skill, not a flake input.
+      tempo-timesheets = ./skills/tempo-timesheets;
     };
   };
 

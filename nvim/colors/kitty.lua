@@ -26,11 +26,15 @@ end
 local c = read_kitty_theme(vim.o.background)
 -- LazyVim applies the colorscheme before other plugins are on the rtp, so load
 -- the plugin that provides the native scheme first.
+-- kitty and nvim name some themes differently (tokyo_night_day -> tokyonight-day).
+if c.name then c.name = c.name:gsub("^tokyo_night_", "tokyonight-") end
 if c.name then pcall(function() require("lazy.core.loader").colorscheme(c.name:lower()) end) end
 -- Source the file directly: nvim ignores :colorscheme inside a colorscheme.
 local native = c.name and vim.api.nvim_get_runtime_file("colors/" .. c.name:lower() .. ".{lua,vim}", false)[1]
 if native then
   vim.cmd.source(native)
+  -- :terminal uses kitty's ANSI colours, so overrides in kitty.nix apply here too.
+  for i = 0, 15 do vim.g["terminal_color_" .. i] = c["color" .. i] or vim.g["terminal_color_" .. i] end
   vim.g.colors_name = "kitty"
   return
 end

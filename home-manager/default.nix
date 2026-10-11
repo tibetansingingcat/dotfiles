@@ -26,6 +26,7 @@ in
     fd
     less
     yt-dlp
+    rclone # cloud storage sync (Dropbox/OneDrive -> Google Drive)
 
     # Dev stuff
     # scala

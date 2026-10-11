@@ -1,4 +1,5 @@
 .serena/
+.cellar/
 .DS_Store
 .envrc
 

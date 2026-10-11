@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   programs.kitty = {
     enable = true;
     # The one place to set the theme. Names are file names in kitty-themes
@@ -6,11 +6,11 @@
     # Follows the macOS appearance. tmux uses ANSI colours, and nvim's
     # colors/kitty.lua reads these files, so both follow.
     autoThemeFiles = {
-      light = "Dayfox";
-      dark = "Nightfox";
-      # light = "Catppuccin-Latte";
-      # dark = "Catppuccin-Mocha";
-      noPreference = "Nightfox";
+      light = "tokyo_night_day";
+      dark = "tokyo_night_moon";
+      # light = "Dayfox";
+      # dark = "Nightfox";
+      noPreference = "tokyo_night_moon";
     };
     font = {
       # package = pkgs.nerdfonts.firacode;
@@ -124,4 +124,15 @@
     #  color17 #FF5D62
     #'';
   };
+  # tokyo_night_day's green, yellow and cyan are under 4.5:1 contrast. Darker
+  # values here. nvim's colors/kitty.lua copies them to :terminal too.
+  xdg.configFile."kitty/light-theme.auto.conf".text = lib.mkForce ''
+    include ${pkgs.kitty-themes}/share/kitty-themes/themes/tokyo_night_day.conf
+    color2  #3d5a1e
+    color10 #3d5a1e
+    color3  #6e5226
+    color11 #6e5226
+    color6  #005f7f
+    color14 #005f7f
+  '';
 }
