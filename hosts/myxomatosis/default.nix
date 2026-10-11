@@ -35,6 +35,7 @@
       "1password"
       "1password-cli"
       "dbeaver-community"
+      "steam"
       "zen"
     ];
     brews = [
