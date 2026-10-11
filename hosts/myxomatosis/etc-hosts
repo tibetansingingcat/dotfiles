@@ -1,0 +1,50 @@
+##
+# Host Database
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+127.0.0.1	localhost
+255.255.255.255	broadcasthost
+::1             localhost
+
+# Letterboxd internal hosts
+
+216.18.195.146          rn-slc-app2.letterboxd.com
+173.231.14.26           rn-slc-app3.letterboxd.com
+192.69.221.194          rn-slc-app4.letterboxd.com
+142.4.53.178            rn-slc-app5.letterboxd.com
+142.4.53.170            rn-slc-app6.letterboxd.com
+216.18.195.162          rn-slc-app7.letterboxd.com
+173.231.12.34           rn-slc-app8.letterboxd.com
+108.171.215.18          rn-slc-app9.letterboxd.com
+173.231.57.26           rn-slc-cp1.letterboxd.com
+173.231.48.26           rn-slc-db1.letterboxd.com
+23.252.125.122          rn-slc-db2.letterboxd.com
+216.158.67.138          rn-slc-db3.letterboxd.com
+216.18.206.170          rn-slc-mail1.letterboxd.com
+146.71.125.18           gs-ogd-app1.letterboxd.com
+107.181.235.242         gs-ogd-app2.letterboxd.com
+192.200.99.114          gs-ogd-app3.letterboxd.com
+192.200.99.138          gs-ogd-app4.letterboxd.com
+192.200.99.98           gs-ogd-app5.letterboxd.com
+107.181.244.162         gs-ogd-app6.letterboxd.com
+192.154.103.146         gs-ogd-app7.letterboxd.com
+192.154.105.218         gs-ogd-app8.letterboxd.com
+192.154.105.210         gs-ogd-app9.letterboxd.com
+192.200.97.186          gs-ogd-cp1.letterboxd.com
+192.200.112.106         gs-ogd-db1.letterboxd.com
+192.200.112.146         gs-ogd-db2.letterboxd.com
+192.154.100.58          gs-ogd-dw1.letterboxd.com
+107.181.253.98          gs-ogd-mail1.letterboxd.com
+2606:c700:4020:54::/64  gs-ogd-mail1.letterboxd.com
+216.158.67.98           nx-ogd-app1.letterboxd.com
+192.69.213.122          nx-ogd-app2.letterboxd.com
+142.4.53.250            nx-ogd-app3.letterboxd.com
+173.231.49.138          nx-ogd-app4.letterboxd.com
+173.231.49.146          nx-ogd-app5.letterboxd.com
+216.158.66.50           nx-ogd-cp1.letterboxd.com
+23.252.125.202          nx-ogd-mail1.letterboxd.com
+13.211.59.38            db1.dev.letterboxd.com
+44.219.12.87            metrics.letterboxd.com sensu.letterboxd.com grafana.letterboxd.com
+54.237.116.242          us-east-1-analysis1.letterboxd.com

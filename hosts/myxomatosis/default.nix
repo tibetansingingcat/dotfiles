@@ -4,6 +4,15 @@
     ../../darwin
   ];
 
+  # Copy of Letterboxd/letterboxd-scripts:hosts (develop) plus the macOS
+  # defaults. The hash is the pre-nix /etc/hosts, so activation may replace it.
+  environment.etc."hosts" = {
+    source = ./etc-hosts;
+    knownSha256Hashes = [
+      "45f7a1cfce0e814e8ceabe7f2a08d2dcaacbeb59437abb1df1bf5a8a6e16f24b"
+    ];
+  };
+
   homebrew = {
     masApps = {
       "WireGuard" = 1451685025;
