@@ -2,6 +2,7 @@
 .cellar/
 .DS_Store
 .envrc
+.claude/
 
 # Eclipse/jdtls launch configs — rewritten locally with machine-specific JRE names
 *.launch
