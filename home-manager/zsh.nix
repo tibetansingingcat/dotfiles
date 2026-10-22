@@ -75,7 +75,6 @@
       export PATH="$PNPM_HOME:$PATH"
 
       export ENABLE_TOOL_SEARCH=true 
-      export NODE_EXTRA_CA_CERTS="$HOME/ca-certs/certs/combined_ca.pem"
       export JIRA_URL=https://jira.savagebeast.com
       
       eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -155,7 +154,6 @@
     #   export PATH="/opt/homebrew/opt/bison/bin:$PATH"
     #   export PATH="$HOME/.local/bin:$PATH"
     #
-    #   export NODE_EXTRA_CA_CERTS="$HOME/ca-certs/certs/combined_ca.pem"
     #   
     #   eval "$(/opt/homebrew/bin/brew shellenv)"
     #   [ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
