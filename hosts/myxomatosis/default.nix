@@ -1,17 +1,19 @@
 # Letterboxd work machine.
-{ ... }: {
+{ lib, ... }: {
   imports = [
     ../../darwin
   ];
 
   # Copy of Letterboxd/letterboxd-scripts:hosts (develop) plus the macOS
-  # defaults. The hash is the pre-nix /etc/hosts, so activation may replace it.
-  environment.etc."hosts" = {
-    source = ./etc-hosts;
-    knownSha256Hashes = [
-      "45f7a1cfce0e814e8ceabe7f2a08d2dcaacbeb59437abb1df1bf5a8a6e16f24b"
-    ];
-  };
+  # defaults. Copied, not linked via environment.etc: sandboxed resolvers
+  # (Safari, Chromium) can't follow a symlink into /nix/store, and the
+  # networking activation step restores /etc/hosts.before-nix-darwin over it.
+  system.activationScripts.etc.text = lib.mkAfter ''
+    if [ -L /etc/hosts ] || ! cmp -s ${./etc-hosts} /etc/hosts; then
+      rm -f /etc/hosts
+      install -m 644 -o root -g wheel ${./etc-hosts} /etc/hosts
+    fi
+  '';
 
   homebrew = {
     masApps = {
