@@ -3,6 +3,7 @@
 .DS_Store
 .envrc
 .claude/
+.kanban/
 
 # Eclipse/jdtls launch configs — rewritten locally with machine-specific JRE names
 *.launch

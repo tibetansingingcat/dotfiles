@@ -67,6 +67,7 @@
   "roslyn.nvim": { "branch": "main", "commit": "2dcbbe81b48f8377df2281d9be4f2c84ccfff520" },
   "rustaceanvim": { "branch": "main", "commit": "4601b060f587cbdee14b25da3a1e34a3ce5b02ed" },
   "snacks.nvim": { "branch": "main", "commit": "882c996cf28183f4d63640de0b4c02ec886d01f2" },
+  "super-kanban.nvim": { "branch": "main", "commit": "fbddd3f48bf672dab1fc6ca26424f3a158623be9" },
   "telescope-live-grep-args.nvim": { "branch": "master", "commit": "53e9df55b3651dd7cf77e172f1e8c9a17407acca" },
   "telescope.nvim": { "branch": "master", "commit": "427b576c16792edad01a92b89721d923c19ad60f" },
   "todo-comments.nvim": { "branch": "main", "commit": "31e3c38ce9b29781e4422fc0322eb0a21f4e8668" },
