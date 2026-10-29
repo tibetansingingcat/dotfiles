@@ -23,6 +23,8 @@
       copy_on_select = "yes";
       hide_window_decorations = "titlebar-only";
       startup_session = "~/.config/kitty/launch.conf";
+      # Left Option sends Alt (nvim <A-…> maps). Right Option still types symbols.
+      macos_option_as_alt = "left";
     };
     #extraConfig = ''
     #  active_tab_font_style   normal

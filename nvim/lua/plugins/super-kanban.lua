@@ -27,6 +27,26 @@ return {
         desc = "Kanban board for branch",
       },
     },
-    opts = {},
+    -- AeroSpace takes alt-h/j/k/l for window focus, so the default <A-…> card moves never arrive.
+    opts = {
+      board = { width = 0.8, height = 0.8, border = "rounded" },
+      mappings = {
+        ["K"] = "move_up",
+        ["J"] = "move_down",
+        ["H"] = "move_left",
+        ["L"] = "move_right",
+      },
+    },
+    config = function(_, opts)
+      require("super-kanban").setup(opts)
+      -- The board hard-codes row = 0, col = 0. Clear them before it shows so snacks centres it.
+      -- Lists are floats relative to the board, so they follow.
+      local Board = require("super-kanban.ui.board")
+      local setup_win = Board.setup_win
+      function Board:setup_win(...)
+        setup_win(self, ...)
+        self.win.opts.row, self.win.opts.col = nil, nil
+      end
+    end,
   },
 }
