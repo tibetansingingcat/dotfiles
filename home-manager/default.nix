@@ -22,7 +22,6 @@
     ripgrep
     fd
     less
-    yt-dlp
     rclone # cloud storage sync (Dropbox/OneDrive -> Google Drive)
 
     # Dev stuff
@@ -131,6 +130,7 @@
   programs.fzf.enableZshIntegration = true;
   programs.eza.enable = true;
   programs.git.enable = true;
+  programs.git.lfs.enable = true;
 
   xdg.configFile = {
     "kitty/launch.conf".text = ''
