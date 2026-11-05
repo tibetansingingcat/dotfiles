@@ -16,6 +16,7 @@
       "balenaetcher"
       "calibre"
       "claude"
+      "discord"
       "google-chrome"
       "google-drive"
       "handbrake-app"
@@ -32,7 +33,7 @@
       "slack"
       "signal"
       "tailscale-app"
-      "tidal"
+      "spotify"
       "visual-studio-code"
     ];
     taps = [

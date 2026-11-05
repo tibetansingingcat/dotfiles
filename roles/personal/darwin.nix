@@ -6,7 +6,6 @@
     "bartender"
     "blender"
     "crossover"
-    "discord"
     "dropbox"
     "godot"
     "linear"
