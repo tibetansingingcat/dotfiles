@@ -3,6 +3,7 @@
     ./homebrew.nix
     ./jankyborders.nix
     ./pam.nix
+    ./remote-desktop.nix
     ./spotlight.nix
   ];
 
