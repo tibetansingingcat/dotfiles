@@ -262,3 +262,49 @@ vim.api.nvim_create_user_command("MvnClean", function(opts)
 end, { nargs = "*", desc = "Stop jdtls, run mvn clean -Pcli, restart jdtls" })
 
 vim.keymap.set("n", "<leader>cJ", toggle, { desc = "Toggle jdtls (stop for mvn clean)" })
+
+-- ---------------------------------------------------------------------------
+-- <leader>dR -- build with jdtls, then restart the debug session.
+--
+-- nvim-dap's restart relaunches the JVM on the target/classes jdtls writes, but
+-- does not build first. jdtls auto-builds only files it hears about, so an edit
+-- made outside nvim can be missed; hot code replace cannot add a method either.
+-- Either way the restarted server ran stale classes.
+
+-- jdtls's BuildWorkspaceStatus: 0 FAILED, 1 SUCCEED, 2 WITH_ERROR, 3 CANCELLED.
+-- WITH_ERROR still restarts: an error anywhere in the workspace reports it, not
+-- only one in the code the server runs.
+local function build_and_restart()
+  local dap = require("dap")
+  local relaunch = function()
+    if dap.session() then
+      dap.restart()
+    else
+      dap.run_last()
+    end
+  end
+
+  local client = clients()[1]
+  if not client then
+    vim.notify("jdtls: not running; relaunching without a build", vim.log.levels.WARN)
+    return relaunch()
+  end
+
+  vim.notify("jdtls: building", vim.log.levels.INFO)
+  -- false = incremental; a full build redoes every module, changed or not.
+  client:request("java/buildWorkspace", false, function(err, status)
+    vim.schedule(function()
+      if err or status == 0 or status == 3 then
+        local why = err and err.message or (status == 0 and "failed" or "cancelled")
+        vim.notify(("jdtls: build %s; not restarting"):format(why), vim.log.levels.ERROR)
+        return
+      end
+      if status == 2 then
+        vim.notify("jdtls: built with errors; restarting anyway", vim.log.levels.WARN)
+      end
+      relaunch()
+    end)
+  end)
+end
+
+vim.keymap.set("n", "<leader>dR", build_and_restart, { desc = "Build (jdtls) and restart debug session" })

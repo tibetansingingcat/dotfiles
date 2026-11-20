@@ -324,12 +324,14 @@ return {
         mode = { "n", "v" },
       },
     },
-    -- Single bottom pane with process output only (no repl/scopes/watches).
+    -- Single bottom pane with the REPL, which is where adapters send program
+    -- output (same buffer as <leader>dr). "console" only fills for adapters
+    -- using integratedTerminal, so Metals left it blank.
     -- Add more elements here if wanted, e.g. { id = "scopes", size = 0.25 }.
     opts = {
       layouts = {
         {
-          elements = { { id = "console", size = 1.0 } },
+          elements = { { id = "repl", size = 1.0 } },
           size = 15,
           position = "bottom",
         },
@@ -550,6 +552,9 @@ return {
       -- errors and a "Press ENTER" prompt on every java buffer. Disabling it leaves
       -- nvim-dap to discover java configs lazily via the provider setup_dap registers.
       dap_main = false,
+      -- jdtls launches main classes in integratedTerminal (dap-ui's console
+      -- element). Route output to the REPL, which is the pane dap-ui shows.
+      dap = { config_overrides = { console = "internalConsole" } },
       settings = {
         java = {
           compile = {
