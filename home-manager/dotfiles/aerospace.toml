@@ -149,6 +149,13 @@ run = 'move-node-to-workspace 9'
 if.app-id = 'com.tinyspeck.slackmacgap'
 run = 'move-node-to-workspace 0'
 
+# Godot game windows ("Going Cuckoo (DEBUG)") float; the editor
+# ("<scene> - Going Cuckoo - Godot Engine") stays tiled.
+[[on-window-detected]]
+if.app-id = 'org.godotengine.godot'
+if.window-title-regex-substring = '^Going Cuckoo'
+run = 'layout floating'
+
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 # 'main' binding mode must be always presented
