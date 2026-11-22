@@ -81,6 +81,8 @@
       NSConvolutionOverride1 = 16.0;
       NSMenuEnableActionImages = false;
     };
+    # Synergy shares keyboard/mouse; Universal Control competes with it and re-enables itself
+    CustomUserPreferences."com.apple.universalcontrol".Disable = true;
   };
   # backwards compat; don't change
   system.stateVersion = 5;
